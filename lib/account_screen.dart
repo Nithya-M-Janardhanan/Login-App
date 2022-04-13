@@ -88,6 +88,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
              ),
             const SizedBox(height: 20,),
+            Text('Language'),
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Visibility(
