@@ -27,18 +27,8 @@ class _UserDetailsState extends State<UserDetails> {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(widget.userModel.profileImage.isEmpty ?'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png' : widget.userModel.profileImage),
-                  //child: Image.network(widget.userModel.profileImage.isEmpty ?'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png' : widget.userModel.profileImage),
                   radius: 50,
                 ),
-                /* const SizedBox(height: 20,),
-              Text(widget.userModel.name.isNotEmpty?'Name : ${widget.userModel.name}':'Name : ',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-              Text(widget.userModel.email.isNotEmpty?'Email : ${widget.userModel.email}':'Email : ',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-              const SizedBox(height: 10,),
-              Text(widget.userModel.phone!.isNotEmpty?'Phone : ${widget.userModel.phone}':'Phone : ',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-              const SizedBox(height: 10,),
-              Text(widget.userModel.address.street.isNotEmpty?'Street : ${widget.userModel.address.street}' : 'Street ',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-              const SizedBox(height: 10,),
-              Text(widget.userModel.address.city.isNotEmpty?'City : ${widget.userModel.address.city}' : 'City ',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),*/
                 const SizedBox(height: 40,),
                 Text(widget.userModel.name.isNotEmpty?widget.userModel.name:'No Name',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 const SizedBox(height: 40,),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:sample_task/sharedpreferences.dart';
-import 'package:sample_task/splashscreen.dart';
+import '../common/sharedpreferences.dart';
+import 'splashscreen.dart';
 
 class Sensor extends StatefulWidget {
   @override
@@ -10,14 +10,12 @@ class Sensor extends StatefulWidget {
 
 class _SensorState extends State<Sensor> {
   bool visible = false;
-  // bool? hasBioSensor;
+
 
   LocalAuthentication authentication = LocalAuthentication();
   Future<void> checkBio() async{
     try{
-      //hasBioSensor = await authentication.canCheckBiometrics;
       if(await SharedPreferenceHelper.getSensor() == true){
-        //SharedPreferenceHelper.setSensor(true);
          getAuth();
       }
     }catch(err){

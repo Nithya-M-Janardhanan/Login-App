@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'main.dart';
-import 'notification_data_screen.dart';
+import '../main.dart';
+import '../screens/notification_data_screen.dart';
 
 class LocalNotificationService{
   static final FlutterLocalNotificationsPlugin notificationsPlugin=FlutterLocalNotificationsPlugin();
@@ -18,9 +18,7 @@ class LocalNotificationService{
     );
     notificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? id)async{
-          debugPrint('======== on select notification');
           if(id!.isNotEmpty){
-            debugPrint('======== id is $id');
             //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NotificationData()));
           }
         }

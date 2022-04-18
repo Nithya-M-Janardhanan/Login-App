@@ -1,24 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_task/account_screen.dart';
-import 'package:sample_task/loginscreen.dart';
-import 'package:sample_task/bottom_nav_screen.dart';
+import '../screens/account_screen.dart';
+import '../screens/loginscreen.dart';
+import '../widgets/bottom_nav_screen.dart';
 import 'package:sample_task/screens/homescreen.dart';
 import 'package:sample_task/screens/user_details_screen.dart';
-import 'package:sample_task/sensor.dart';
-import 'package:sample_task/splashscreen.dart';
+import '../screens/sensor.dart';
+import '../screens/splashscreen.dart';
 
 import 'nav_const.dart';
 
 class NavRouteGenerator {
-  // static Map<String, WidgetBuilder> generateRoutes({dynamic arguments}) {
-  //   return {
-  //     homeScreenRoute: (context) => HomeScreen(),
-  //     loginScreenRoute: (_) =>   LoginScreen(),
-  //     sensorScreenRoute: (_) => Sensor(),
-  //     mainScreenRoute: (_) => MainScreen(),
-  //   };
-  // }
 
   static Route<dynamic> generateRoute(RouteSettings settings,{dynamic arguments}) {
     switch (settings.name) {

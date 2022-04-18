@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:sample_task/models/usermodel.dart';
 import 'package:sample_task/services/api_manager.dart';
-import 'package:sample_task/sharedpreferences.dart';
+import '../common/sharedpreferences.dart';
 
-import 'db_helper.dart';
+import '../services/db_helper.dart';
 
 class ContactsProvider with ChangeNotifier {
   final DatabaseHelperDb _db = DatabaseHelperDb.instance;

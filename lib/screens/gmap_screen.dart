@@ -10,11 +10,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_task/account_screen.dart';
+import 'account_screen.dart';
 import 'package:sample_task/map_related/search.dart';
-import 'package:sample_task/services/db_provider.dart';
-import 'package:sample_task/services/nav_const.dart';
-import 'package:sample_task/sharedpreferences.dart';
+import '../provider/db_provider.dart';
+import '../route_nav/nav_const.dart';
+import '../common/sharedpreferences.dart';
 
 
 class GoogleMapScreen extends StatefulWidget {
@@ -25,13 +25,7 @@ class GoogleMapScreen extends StatefulWidget {
 }
 
 class _GoogleMapScreenState extends State<GoogleMapScreen> {
-  // late GoogleMapController googleMapController;
-  // Set<Marker> markers = {};
-  // void onMapCreated(GoogleMapController controller){
-  //   setState(() {
-  //     markers.add(const Marker(markerId: MarkerId('id-1'),position: LatLng(10.5276,76.2144)));
-  //   });
-  // }
+
   Completer<GoogleMapController> _controller = Completer();
   Position? currentPosition;
   LatLng? latLong;
@@ -98,7 +92,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       placemark = placemarks.first;
       locality = placemark!.locality!;
     });
-    debugPrint('*********** $locality');
   }
 
   getLocName() async {
@@ -224,33 +217,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
               ),
             ],
           ),
-          /*bottomSheet: Container(
-          height: 200,
-          child: Column(
-            children: [
-              ElevatedButton(onPressed: () async {
-                getUserLocation();
-                getUserAddress();
-              }, child: const Text('Use Current Location',style: TextStyle(color: Colors.black),),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                  side: BorderSide(width: 1,color: Colors.grey)
-                    ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20,left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.location_on,color: Colors.red,),
-                    Text(locating?'':locality,style: const TextStyle(fontSize: 15),),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )*/
         ]));
   }
 

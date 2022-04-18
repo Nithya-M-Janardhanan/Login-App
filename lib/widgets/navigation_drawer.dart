@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sample_task/drawer_item.dart';
-import 'package:sample_task/sample_file.dart';
-import 'package:sample_task/sharedpreferences.dart';
+import 'drawer_item.dart';
+import 'sample_file.dart';
+import '../common/sharedpreferences.dart';
 
 class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({Key? key}) : super(key: key);

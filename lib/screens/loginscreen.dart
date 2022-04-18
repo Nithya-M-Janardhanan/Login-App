@@ -5,14 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import 'main.dart';
-import 'screens/homescreen.dart';
+import '../main.dart';
+import 'homescreen.dart';
 import 'package:sample_task/provider/user_provider.dart';
-import 'package:sample_task/sharedpreferences.dart';
-import 'package:sample_task/validator.dart';
+import '../common/sharedpreferences.dart';
+import '../common/validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'const.dart';
+import '../common/const.dart';
 
 class LoginScreen extends StatefulWidget {
   static String checkLogin = '';
@@ -30,29 +30,13 @@ class LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool circular=false;
 
-  //late final String email;
+
   @override
   void initState() {
     //showNotification();
     super.initState();
   }
   static showNotification(){
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message){
-    //   RemoteNotification? notification = message.notification;
-    //   AndroidNotification? android = message.notification?.android;
-    //   if(notification != null && android != null){
-    //     flutterLocalNotificationsPlugin.show(notification.hashCode, notification.title, notification.body, NotificationDetails(
-    //         android: AndroidNotificationDetails(
-    //             channel.id,
-    //             channel.name,
-    //             channelDescription: channel.description,
-    //             color: Colors.blue,
-    //             playSound: true,
-    //             icon: '@mipmap/ic_launcher'
-    //         )
-    //     ));
-    //   }
-    // });
     flutterLocalNotificationsPlugin.show(0,
         'Testing',
         'for testing',
@@ -68,6 +52,7 @@ class LoginScreenState extends State<LoginScreen> {
         )
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,9 +143,7 @@ class LoginScreenState extends State<LoginScreen> {
                     style:  ElevatedButton.styleFrom(primary: Colors.teal),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
-                      //FocusManager.instance.primaryFocus?.unfocus();
                       if (_formKey.currentState!.validate()) {
-                       // if (emailController.text == 'abcd@gmail.com') {
                           SharedPreferenceHelper.setUsername(nameController.text);
                           LoginScreen.checkLogin = 'other';
                           await SharedPreferenceHelper.saveLoginMethod(
@@ -168,17 +151,6 @@ class LoginScreenState extends State<LoginScreen> {
                           Navigator.pushReplacementNamed(context, "/mainscreen");
                           //showNotification();
                           //showNotification();
-                        /*} else {
-                          final snackBar = SnackBar(
-                              content: const Text('Enter the valid email -abcd@gmail.com'),
-                              action: SnackBarAction(
-                                label: '',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }*/
                         // email = emailController.text;
                         //  SharedPreferences sharedPref =
                         //  await SharedPreferences.getInstance();
@@ -211,7 +183,6 @@ class LoginScreenState extends State<LoginScreen> {
                         .googleLogin(context).then((value){
                       circular = true;
                     });
-                    debugPrint('%%%%%%%%%%%%%%%%$circular');
                     LoginScreen.checkLogin = 'google';
                   },
                   title: 'Login with google',

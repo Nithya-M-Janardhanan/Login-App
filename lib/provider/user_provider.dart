@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:sample_task/loginscreen.dart';
+import '../screens/loginscreen.dart';
 import 'package:sample_task/main.dart';
 import '../screens/homescreen.dart';
-import 'package:sample_task/sharedpreferences.dart';
-import 'package:sample_task/social_signin.dart';
+import '../common/sharedpreferences.dart';
+import '../common/social_signin.dart';
 
-import '../const.dart';
+import '../common/const.dart';
 
 class UserProvider extends ChangeNotifier{
   bool isLoading = false;
@@ -18,6 +18,7 @@ class UserProvider extends ChangeNotifier{
   String lname = '';
   Map? fbDetails;
   late List<String> gname;
+  ///for local notification
   showNotifications(){
     flutterLocalNotificationsPlugin.show(0,
         'Testing',
@@ -34,6 +35,8 @@ class UserProvider extends ChangeNotifier{
         )
     );
   }
+  ///
+  /// sign in with google
   googleLogin(BuildContext context) async {
     isLoading = true;
 
@@ -83,6 +86,7 @@ class UserProvider extends ChangeNotifier{
       }
   }
 
+  /// sign with facebook
   fbLogin(BuildContext context) async {
     isLoading = true;
       try {
