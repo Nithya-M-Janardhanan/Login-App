@@ -5,3 +5,4 @@ const String sensorScreenRoute = '/sensor';
 const String mainScreenRoute = '/mainscreen';
 const String accountScreenRoute = '/accountScreen';
 const String userDetailScreenRoute = '/userDetailScreen';
+const String notificationDataScreenRoute = '/notificationDataScreen';

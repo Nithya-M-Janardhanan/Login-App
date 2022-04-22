@@ -10,10 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:provider/provider.dart';
-import 'account_screen.dart';
-import 'package:sample_task/map_related/search.dart';
-import '../provider/db_provider.dart';
-import '../route_nav/nav_const.dart';
+import 'package:sample_task/provider/auth_provider.dart';
 import '../common/sharedpreferences.dart';
 
 
@@ -202,7 +199,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                 onPressed: () async {
                   if (locality.isNotEmpty) {
                     //await SharedPreferenceHelper.setLocation(locality);
-                    Provider.of<ContactsProvider>(context,listen: false).setLocationName(locality);
+                    Provider.of<AuthProvider>(context,listen: false).setLocationName(locality);
                     Navigator.pop(context);
                    // Navigator.pushReplacementNamed(context, accountScreenRoute,arguments: locality??" ");
                   }

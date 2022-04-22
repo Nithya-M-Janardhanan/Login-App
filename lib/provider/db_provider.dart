@@ -11,10 +11,9 @@ class ContactsProvider with ChangeNotifier {
   final DatabaseHelperDb _db = DatabaseHelperDb.instance;
 
   UsersList? _lists;
-  String localityName='';
-
   UsersList? get lists => _lists;
-   List<UserModel>?user;
+  List<UserModel>? user;
+
   //
   set lists(UsersList? lists) {
     _lists = lists;
@@ -36,15 +35,15 @@ class ContactsProvider with ChangeNotifier {
 
   Future<void> loadUsers() async {
     //lists?.userList = await DatabaseHelperDb.instance.getUserList();
-   user= await DatabaseHelperDb.instance.getUserList();
+    user = await DatabaseHelperDb.instance.getUserList();
     //user = await ApiManager().getData();
-   //lists?.userList = user;
-   debugPrint('length ${user?.length}');
+    //lists?.userList = user;
+    debugPrint('length ${user?.length}');
     if (user == null || user!.isEmpty) {
       String? jsonString = await _loadDataFromApi();
       final jsonResponse = json.decode(jsonString!);
       UsersList data = UsersList.fromJson(jsonResponse);
-      data.userList?.forEach((element) async{
+      data.userList?.forEach((element) async {
         await _db.createUserList(element);
       });
       user = await _db.getUserList();
@@ -55,6 +54,7 @@ class ContactsProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
   ///
   Future<void> loadContacts() async {
     lists?.userList = await DatabaseHelperDb.instance.getUserList();
@@ -70,15 +70,5 @@ class ContactsProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-  ///set location name
-    Future<void>setLocationName(String locationName) async{
-      await SharedPreferenceHelper.setLocation(locationName);
-      localityName = locationName;
-      notifyListeners();
-    }
-  Future<void>getLocationName() async{
-    await SharedPreferenceHelper.getLocation();
-    notifyListeners();
-  }
-///
+
 }

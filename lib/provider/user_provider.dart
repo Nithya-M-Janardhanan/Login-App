@@ -19,22 +19,22 @@ class UserProvider extends ChangeNotifier{
   Map? fbDetails;
   late List<String> gname;
   ///for local notification
-  showNotifications(){
-    flutterLocalNotificationsPlugin.show(0,
-        'Testing',
-        'for testing',
-        NotificationDetails(
-            android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                color: Colors.blue,
-                playSound: true,
-                icon: '@mipmap/ic_launcher'
-            )
-        )
-    );
-  }
+  // showNotifications(){
+  //   flutterLocalNotificationsPlugin.show(0,
+  //       'Testing',
+  //       'for testing',
+  //       NotificationDetails(
+  //           android: AndroidNotificationDetails(
+  //               channel.id,
+  //               channel.name,
+  //               channelDescription: channel.description,
+  //               color: Colors.blue,
+  //               playSound: true,
+  //               icon: '@mipmap/ic_launcher'
+  //           )
+  //       )
+  //   );
+  // }
   ///
   /// sign in with google
   googleLogin(BuildContext context) async {
