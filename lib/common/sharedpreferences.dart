@@ -7,6 +7,7 @@ class SharedPreferenceHelper {
   static const String login = 'loginMethod';
   static const String sensorVal = 'val';
   static const String locationVal = 'loc';
+  static const String appLanguageCode = "languageCode";
 
   static Future<SharedPreferences?> init() async {
     if (_pref != null) {
@@ -81,5 +82,16 @@ class SharedPreferenceHelper {
     locationName = _preferences.getString(locationVal) ?? '';
     debugPrint('location name is.........$locationName');
     return locationName;
+  }
+
+  static Future<String> getLocale() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    String languageCode = _prefs.getString(appLanguageCode) ?? "en";
+    return languageCode;
+  }
+
+  static void setLocale(String languageCode) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(appLanguageCode, languageCode);
   }
 }

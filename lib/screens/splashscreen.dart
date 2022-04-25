@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../common/sharedpreferences.dart';
+import '../provider/locale_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    Future.microtask(() => context.read<LocaleProvider>().getLocalLocale());
     getValidationData();
     Timer(const Duration(seconds: 2), () async {
       if (await SharedPreferenceHelper.getSensor() == true) {

@@ -12,6 +12,7 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_task/provider/auth_provider.dart';
 import '../common/sharedpreferences.dart';
+import '../generated/l10n.dart';
 
 
 class GoogleMapScreen extends StatefulWidget {
@@ -108,11 +109,12 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final translated = S.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
         key: homeScaffoldKey,
         appBar: AppBar(
-          title: const Text('Choose Location'),
+          title:  Text(translated.chooseLocation),
         ),
         body: Column(children: [
             Stack(children: [
@@ -159,8 +161,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                   getUserLocation();
                   getUserAddress();
                 },
-                child: const Text(
-                  'Use Current Location',
+                child:  Text(
+                  translated.useCurrentLocation,
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -204,8 +206,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                    // Navigator.pushReplacementNamed(context, accountScreenRoute,arguments: locality??" ");
                   }
                 },
-                child: const Text(
-                  'Confirm Location',
+                child:  Text(
+                  translated.confirmLocation,
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(

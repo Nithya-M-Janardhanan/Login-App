@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+8
+version: 1.0.0+9
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -55,6 +55,9 @@ dependencies:
   firebase_messaging: ^11.0.0
   flutter_local_notifications: ^9.4.0
   firebase_messaging_platform_interface: 3.1.6
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
 
 
 dev_dependencies:
@@ -73,7 +76,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -111,3 +114,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

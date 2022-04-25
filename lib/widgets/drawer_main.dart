@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_task/generated/l10n.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class MainDrawer extends StatefulWidget {
 class _MainDrawerState extends State<MainDrawer> {
   @override
   Widget build(BuildContext context) {
+    final translated = S.of(context);
     return Column(
       children: [
         Container(
@@ -17,13 +19,13 @@ class _MainDrawerState extends State<MainDrawer> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
+              children:  [
                 CircleAvatar(
                   radius: 50,
                   backgroundImage: NetworkImage('https://media.istockphoto.com/vectors/user-avatar-profile-icon-black-vector-illustration-vector-id1209654046?k=20&m=1209654046&s=612x612&w=0&h=Atw7VdjWG8KgyST8AXXJdmBkzn0lvgqyWod9vTb2XoE='),
                 ),
                 SizedBox(height: 10,),
-                Text('Name'),
+                Text(translated.name),
               ],
             ),
           ),
@@ -33,7 +35,7 @@ class _MainDrawerState extends State<MainDrawer> {
           onTap: (){
 
           },
-          title: Text('Your Profile'),
+          title: Text(translated.yourProfile),
           leading: Icon(Icons.person,color: Colors.black,),
         ),
         ListTile(

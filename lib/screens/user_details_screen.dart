@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_task/generated/l10n.dart';
 import 'package:sample_task/models/usermodel.dart';
 
 class UserDetails extends StatefulWidget {
@@ -14,9 +15,10 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   @override
   Widget build(BuildContext context) {
+    final translated = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Details'),
+        title:  Text(translated.userDetails),
         backgroundColor: Colors.teal,
       ),
       body: ListView.builder(
@@ -38,7 +40,7 @@ class _UserDetailsState extends State<UserDetails> {
                 ),
                 // Text(widget.userModel.name.isNotEmpty?widget.userModel.name:'No Name',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 Text(
-                  widget.userModel?.name ?? 'No Name',
+                  widget.userModel?.name ?? translated.noData,
                   style: const TextStyle(
                       fontSize: 15, fontWeight: FontWeight.bold),
                 ),
@@ -52,10 +54,10 @@ class _UserDetailsState extends State<UserDetails> {
                       Icons.email_outlined,
                       color: Colors.teal,
                     ),
-                    title: Text('Email'),
+                    title: Text(translated.email),
                     // subtitle: Text(widget.userModel.email.isNotEmpty?widget.userModel.email:' No email to show',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     subtitle: Text(
-                      widget.userModel?.email ?? ' No email to show',
+                      widget.userModel?.email ?? translated.noData,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
@@ -68,10 +70,10 @@ class _UserDetailsState extends State<UserDetails> {
                   padding: const EdgeInsets.only(left: 20),
                   child: ListTile(
                     leading: const Icon(Icons.phone, color: Colors.teal),
-                    title: Text('Phone'),
+                    title: Text(translated.phone),
                     //subtitle: Text(widget.userModel.phone!.isNotEmpty?'${widget.userModel.phone}':'No phone number to show',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     subtitle: Text(
-                      widget.userModel?.phone ?? 'No phone number to show',
+                      widget.userModel?.phone ?? translated.noData,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
@@ -84,10 +86,10 @@ class _UserDetailsState extends State<UserDetails> {
                   padding: const EdgeInsets.only(left: 20),
                   child: ListTile(
                     leading: const Icon(Icons.streetview, color: Colors.teal),
-                    title: Text('Street'),
+                    title: Text(translated.street),
                     //subtitle: Text(widget.userModel.address.street.isNotEmpty?widget.userModel.address.street : 'No city to show',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     subtitle: Text(
-                      widget.userModel?.address.street ?? 'No city to show',
+                      widget.userModel?.address.street ?? translated.noData,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
@@ -101,10 +103,10 @@ class _UserDetailsState extends State<UserDetails> {
                   child: ListTile(
                     leading:
                         const Icon(Icons.location_city, color: Colors.teal),
-                    title: Text('City'),
+                    title: Text(translated.city),
                     //subtitle: Text(widget.userModel.address.city.isNotEmpty?widget.userModel.address.city : 'No city to show',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     subtitle: Text(
-                      widget.userModel?.address.city ?? 'No city to show',
+                      widget.userModel?.address.city ?? translated.noData,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),
@@ -117,10 +119,10 @@ class _UserDetailsState extends State<UserDetails> {
                   padding: const EdgeInsets.only(left: 20),
                   child: ListTile(
                     leading: const Icon(Icons.web, color: Colors.teal),
-                    title: Text('Website'),
+                    title: Text(translated.website),
                     //subtitle: Text(widget.userModel.website.isNotEmpty?widget.userModel.website : 'No website to show',style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                     subtitle: Text(
-                      widget.userModel?.website ?? 'No website to show',
+                      widget.userModel?.website ?? translated.noData,
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.bold),
                     ),

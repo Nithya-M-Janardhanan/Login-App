@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_task/models/arguments.dart';
 import 'package:sample_task/route_nav/nav_const.dart';
+import '../generated/l10n.dart';
 import '../services/notification_service.dart';
 import 'gmap_screen.dart';
 import 'package:sample_task/models/usermodel.dart';
@@ -29,9 +30,10 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final translated = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home screen'),
+        title:  Text(translated.homeScreen),
         backgroundColor: Colors.teal,
         actions: [
           Padding(
@@ -67,11 +69,11 @@ class HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 controller: textController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey, width: 3.0)),
-                    hintText: 'Search name'),
+                    hintText: translated.searchName),
               ),
             ),
             textController.text.isNotEmpty && userOnSearch!.isEmpty
@@ -79,10 +81,10 @@ class HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children:  [
                         Icon(Icons.search_off),
                         Text(
-                          'No Results Found',
+                          translated.noResults,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
@@ -116,18 +118,18 @@ class HomeScreenState extends State<HomeScreen> {
                                   ),
                                   title: Text(textController.text.isNotEmpty
                                       ? userOnSearch![index].name.isNotEmpty
-                                          ? 'Name : ${userOnSearch![index].name}'
-                                          : 'Name : '
+                                          ? '${translated.name} : ${userOnSearch![index].name}'
+                                          : '${translated.name} : '
                                       : item!.name.isNotEmpty
-                                          ? 'Name : ${item.name}'
-                                          : 'Name : '),
+                                          ? '${translated.name} : ${item.name}'
+                                          : '${translated.name} : '),
                                   subtitle: Text(textController.text.isNotEmpty
                                       ? userOnSearch![index].username.isNotEmpty
-                                          ? 'Username : ${userOnSearch![index].username}'
-                                          : 'UserName : '
+                                          ? '${translated.userName} : ${userOnSearch![index].username}'
+                                          : '${translated.userName} : '
                                       : item!.username.isNotEmpty
-                                          ? 'Username : ${item.username}'
-                                          : 'UserName : '),
+                                          ? '${translated.userName} : ${item.username}'
+                                          : '${translated.userName} : '),
                                   onTap: () {
                                     //Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>UserDetails(userModel: textController.text.isNotEmpty ? userOnSearch![index] : item!)));
                                     ArgumentsRoute route = ArgumentsRoute(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sample_task/generated/l10n.dart';
 import 'drawer_item.dart';
 import 'sample_file.dart';
 import '../common/sharedpreferences.dart';
@@ -27,6 +28,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   }
   @override
   Widget build(BuildContext context) {
+    final translated = S.of(context);
     return Drawer(
       child: Material(
         color: Colors.teal,
@@ -38,11 +40,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               const SizedBox(height: 40,),
               const Divider(thickness: 1,color: Colors.white,),
               const SizedBox(height: 40,),
-              DrawerItem(name: 'Your Profile', icon: Icons.person, onPressed: (){onItemPressed(context, index: 0);}),
-              DrawerItem(name: 'Dashboard', icon: Icons.dashboard, onPressed: (){onItemPressed(context, index: 1);}),
-              DrawerItem(name: 'Favourites', icon: Icons.favorite_border_outlined, onPressed: (){onItemPressed(context, index: 2);}),
-              DrawerItem(name: 'Saved', icon: Icons.save, onPressed: (){onItemPressed(context, index: 3);}),
-              DrawerItem(name: 'Invite', icon: Icons.person_add, onPressed: (){onItemPressed(context, index: 4);}),
+              DrawerItem(name: translated.yourProfile, icon: Icons.person, onPressed: (){onItemPressed(context, index: 0);}),
+              DrawerItem(name: translated.dashboard, icon: Icons.dashboard, onPressed: (){onItemPressed(context, index: 1);}),
+              DrawerItem(name: translated.favourites, icon: Icons.favorite_border_outlined, onPressed: (){onItemPressed(context, index: 2);}),
+              DrawerItem(name: translated.saved, icon: Icons.save, onPressed: (){onItemPressed(context, index: 3);}),
+              DrawerItem(name: translated.invite, icon: Icons.person_add, onPressed: (){onItemPressed(context, index: 4);}),
             ],
           ),
         ),

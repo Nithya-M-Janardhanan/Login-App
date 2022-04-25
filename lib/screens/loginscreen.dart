@@ -6,6 +6,9 @@ import '../common/sharedpreferences.dart';
 
 import '../common/const.dart';
 
+
+import '../generated/l10n.dart';
+
 class LoginScreen extends StatefulWidget {
   static String checkLogin = '';
 
@@ -29,10 +32,11 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final translated = S.of(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text('Sample Login App'),
+          title:  Text(translated.sampleLoginApp),
           backgroundColor: Colors.teal,
         ),
         body: Form(
@@ -45,17 +49,17 @@ class LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   controller: nameController,
-                  decoration: const InputDecoration(
-                      hintText: 'Enter Name',
+                  decoration:  InputDecoration(
+                      hintText: translated.enterName,
                       contentPadding: EdgeInsets.all(10.0),
                       border: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(5.0)))),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return translated.pleaseEnterName;
                     } else if (value.length < 3) {
-                      return 'Name must be more than 3 character';
+                      return translated.nameMustContain;
                     }
                     return null;
                   },
@@ -66,8 +70,8 @@ class LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  decoration: const InputDecoration(
-                      hintText: 'Enter your Email',
+                  decoration:  InputDecoration(
+                      hintText: translated.enterEmail,
                       contentPadding: EdgeInsets.all(10.0),
                       border: OutlineInputBorder(
                           borderRadius:
@@ -77,7 +81,7 @@ class LoginScreenState extends State<LoginScreen> {
                         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                     RegExp regex = RegExp(pattern);
                     if (!regex.hasMatch(value!)) {
-                      return 'Enter valid email';
+                      return translated.validEmail;
                     } else {
                       return null;
                     }
@@ -89,8 +93,8 @@ class LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
                     keyboardType: TextInputType.text,
                     controller: passwordController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter Password',
+                    decoration:  InputDecoration(
+                      hintText: translated.enterPassword,
                       contentPadding: EdgeInsets.all(10.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -98,14 +102,14 @@ class LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (String? value) {
                       if (value!.length < 8) {
-                        return 'Password must not be less than 8';
+                        return translated.pwdMustNotLessthan;
                       } else if (!value.contains(RegExp(r'[0-9]'))) {
-                        return 'must contain numbers';
+                        return translated.mustContainNumbers;
                       } else if (!value
                           .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-                        return 'must contain one special character character';
+                        return translated.specialChar;
                       } else if (!value.contains(RegExp(r'[A-Z]'))) {
-                        return 'must contain one capital letter';
+                        return translated.capitalLetter;
                       }
                       return null;
                     }),
@@ -125,12 +129,12 @@ class LoginScreenState extends State<LoginScreen> {
                       Navigator.pushReplacementNamed(context, "/mainscreen");
                     }
                   },
-                  child: const Text('Login')),
+                  child:  Text(translated.login)),
               const SizedBox(
                 height: 20.0,
               ),
-              const Text(
-                'OR',
+               Text(
+                translated.or,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -146,7 +150,7 @@ class LoginScreenState extends State<LoginScreen> {
                   });
                   LoginScreen.checkLogin = 'google';
                 },
-                title: 'Login with google',
+                title: translated.loginWithGoogle,
               ),
               SocialLoginTile(
                 icon: 'assets/images/fbsample.png',
@@ -156,7 +160,7 @@ class LoginScreenState extends State<LoginScreen> {
 
                   LoginScreen.checkLogin = 'facebook';
                 },
-                title: 'Login with facebook',
+                title: translated.loginWithFacebook,
               ),
               circular == true ? const CircularProgressIndicator() : SizedBox()
             ],

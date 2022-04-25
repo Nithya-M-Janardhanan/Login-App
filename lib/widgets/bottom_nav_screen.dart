@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import '../generated/l10n.dart';
 import '../screens/account_screen.dart';
 import '../route_nav/nav_const.dart';
 import '../route_nav/route_generator.dart';
@@ -23,11 +24,12 @@ class _MainScreenState extends State<MainScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(tabBar: CupertinoTabBar(items: const[
-      BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.teal,),label: 'Home',),
-      BottomNavigationBarItem(icon: Icon(Icons.person,color: Colors.teal),label: 'Account',),
-      BottomNavigationBarItem(icon: Icon(Icons.favorite,color: Colors.teal),label: 'Favourites',),
-      BottomNavigationBarItem(icon: Icon(Icons.settings,color: Colors.teal),label: 'Menu Settings',),
+    final translated = S.of(context);
+    return CupertinoTabScaffold(tabBar: CupertinoTabBar(items: [
+      BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.teal,),label: translated.home,),
+      BottomNavigationBarItem(icon: Icon(Icons.person,color: Colors.teal),label: translated.account,),
+      BottomNavigationBarItem(icon: Icon(Icons.favorite,color: Colors.teal),label: translated.favourites,),
+      BottomNavigationBarItem(icon: Icon(Icons.settings,color: Colors.teal),label: translated.menuSettings,),
     ],),
         tabBuilder: (context,index){
           switch(index){

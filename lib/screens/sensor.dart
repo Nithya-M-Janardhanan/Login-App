@@ -36,7 +36,6 @@ class _SensorState extends State<Sensor> {
       }
       if(isAuth){
         Navigator.pushReplacementNamed(context, "/mainscreen");
-        debugPrint('nithya');
       }
       debugPrint('$isAuth');
     }catch(err){
