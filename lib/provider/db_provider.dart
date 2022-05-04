@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:sample_task/models/usermodel.dart';
 import 'package:sample_task/services/api_manager.dart';
+import '../common/const.dart';
 import '../common/sharedpreferences.dart';
 
 import '../services/db_helper.dart';
@@ -13,7 +14,8 @@ class ContactsProvider with ChangeNotifier {
   UsersList? _lists;
   UsersList? get lists => _lists;
   List<UserModel>? user;
-
+  bool isLoading = false;
+  LoadState pageLoadingState = LoadState.loaded;
   //
   set lists(UsersList? lists) {
     _lists = lists;
@@ -35,6 +37,7 @@ class ContactsProvider with ChangeNotifier {
 
   Future<void> loadUsers() async {
     //lists?.userList = await DatabaseHelperDb.instance.getUserList();
+    updatePageLoadingState(LoadState.loading);
     user = await DatabaseHelperDb.instance.getUserList();
     //user = await ApiManager().getData();
     //lists?.userList = user;
@@ -52,6 +55,7 @@ class ContactsProvider with ChangeNotifier {
       //   await insertToUsers(lists);
       // }
     }
+    updatePageLoadingState(LoadState.loaded);
     notifyListeners();
   }
 
@@ -70,5 +74,8 @@ class ContactsProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-
+  void updatePageLoadingState(LoadState val) {
+    pageLoadingState = val;
+    notifyListeners();
+  }
 }

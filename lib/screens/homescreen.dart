@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sample_task/common/const.dart';
 import 'package:sample_task/models/arguments.dart';
 import 'package:sample_task/route_nav/nav_const.dart';
 import '../generated/l10n.dart';
 import '../services/notification_service.dart';
+import '../shimmer/custom_widget.dart';
 import 'gmap_screen.dart';
 import 'package:sample_task/models/usermodel.dart';
 import '../widgets/navigation_drawer.dart';
@@ -20,14 +22,23 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   final textController = TextEditingController();
   List<UserModel>? userOnSearch;
-
+  bool isLoading = false;
   @override
   void initState() {
     LocalNotificationService.initializeNotificationHome(context);
     Future.microtask(() => context.read<ContactsProvider>().loadUsers());
     super.initState();
   }
-
+  Widget buildShimmer() =>
+      ListTile(
+        leading: const CustomWidget.circular(height: 64, width: 64),
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: CustomWidget.rectangular(height: 16,
+            width: MediaQuery.of(context).size.width*0.3,),
+        ),
+        subtitle: const CustomWidget.rectangular(height: 14),
+      );
   @override
   Widget build(BuildContext context) {
     final translated = S.of(context);
@@ -43,7 +54,7 @@ class HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => GoogleMapScreen()));
+                            builder: (context) => const GoogleMapScreen()));
                   },
                   icon: const Icon(Icons.location_on)))
         ],
@@ -54,6 +65,7 @@ class HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           );
         }
+
         return Column(
           children: [
             Padding(
@@ -70,8 +82,8 @@ class HomeScreenState extends State<HomeScreen> {
                 },
                 controller: textController,
                 decoration:  InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
+                    prefixIcon: const Icon(Icons.search),
+                    border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey, width: 3.0)),
                     hintText: translated.searchName),
               ),
@@ -82,10 +94,10 @@ class HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:  [
-                        Icon(Icons.search_off),
+                        const Icon(Icons.search_off),
                         Text(
                           translated.noResults,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ],
@@ -99,9 +111,13 @@ class HomeScreenState extends State<HomeScreen> {
                             : model.user?.length,
                         itemBuilder: (context, index) {
                           var item = model.user?.elementAt(index);
+                          if(model.pageLoadingState == LoadState.loading && model.user != null){
+                            buildShimmer();
+                          }
                           return Card(
                             child: Column(
                               children: [
+                                model.isLoading?buildShimmer():
                                 ListTile(
                                   leading: CircleAvatar(
                                     backgroundImage: NetworkImage(textController
