@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sample_task/route_nav/nav_const.dart';
 import '../common/const.dart';
 import 'hexcolor.dart';
 import 'home_provider.dart';
@@ -113,7 +114,9 @@ class ProductsWidget extends StatelessWidget {
                               alignment: Alignment.center,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(primary: HexColor('#199B3B'),minimumSize: Size(110, 30)),
-                                onPressed: (){},
+                                onPressed: (){
+                                  Navigator.pushNamed(context, cartScreenRoute);
+                                },
                                 child: Text('ADD'),
 
                               ),

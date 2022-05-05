@@ -6,3 +6,4 @@ const String mainScreenRoute = '/mainscreen';
 const String accountScreenRoute = '/accountScreen';
 const String userDetailScreenRoute = '/userDetailScreen';
 const String notificationDataScreenRoute = '/notificationDataScreen';
+const String cartScreenRoute = '/cartScreen';
