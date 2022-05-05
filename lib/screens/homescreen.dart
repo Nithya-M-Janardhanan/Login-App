@@ -60,11 +60,11 @@ class HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Consumer<ContactsProvider>(builder: (context, model, child) {
-        if (model.user == null) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+        // if (model.user == null) {
+        //   return const Center(
+        //     child: CircularProgressIndicator(),
+        //   );
+        // }
 
         return Column(
           children: [
@@ -111,15 +111,13 @@ class HomeScreenState extends State<HomeScreen> {
                             : model.user?.length,
                         itemBuilder: (context, index) {
                           var item = model.user?.elementAt(index);
-                          if(model.pageLoadingState == LoadState.loading && model.user != null){
-                            buildShimmer();
-                          }
+
                           return Card(
                             child: Column(
                               children: [
-                                model.isLoading?buildShimmer():
                                 ListTile(
-                                  leading: CircleAvatar(
+                                  leading: model.user == null ? const CustomWidget.circular(height: 64, width: 64) :
+                                  CircleAvatar(
                                     backgroundImage: NetworkImage(textController
                                             .text.isNotEmpty
                                         ? userOnSearch![index]
@@ -132,14 +130,20 @@ class HomeScreenState extends State<HomeScreen> {
                                             : item.profileImage),
                                     radius: 18,
                                   ),
-                                  title: Text(textController.text.isNotEmpty
+                                  title: model.user == null ? Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: CustomWidget.rectangular(height: 16,
+                                      width: MediaQuery.of(context).size.width*0.3,),
+                                  ) :
+                                  Text(textController.text.isNotEmpty
                                       ? userOnSearch![index].name.isNotEmpty
                                           ? '${translated.name} : ${userOnSearch![index].name}'
                                           : '${translated.name} : '
                                       : item!.name.isNotEmpty
                                           ? '${translated.name} : ${item.name}'
                                           : '${translated.name} : '),
-                                  subtitle: Text(textController.text.isNotEmpty
+                                  subtitle: model.user == null ? const CustomWidget.rectangular(height: 14) :
+                                  Text(textController.text.isNotEmpty
                                       ? userOnSearch![index].username.isNotEmpty
                                           ? '${translated.userName} : ${userOnSearch![index].username}'
                                           : '${translated.userName} : '
