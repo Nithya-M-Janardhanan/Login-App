@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
     final translated = S.of(context);
     return CupertinoTabScaffold(tabBar: CupertinoTabBar(items: [
       BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.teal,),label: translated.home,),
-      BottomNavigationBarItem(icon: Icon(Icons.person,color: Colors.teal),label: translated.account,),
+      BottomNavigationBarItem(icon: Icon(Icons.category_outlined,color: Colors.teal),label: translated.category,),
       BottomNavigationBarItem(icon: Icon(Icons.favorite,color: Colors.teal),label: translated.favourites,),
       BottomNavigationBarItem(icon: Icon(Icons.settings,color: Colors.teal),label: translated.menuSettings,),
     ],),

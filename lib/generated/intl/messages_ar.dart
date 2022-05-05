@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "arabic": MessageLookupByLibrary.simpleMessage("عربي"),
         "capitalLetter": MessageLookupByLibrary.simpleMessage(
             "يجب أن يحتوي على حرف واحد كبير"),
+        "category": MessageLookupByLibrary.simpleMessage("الفئة"),
         "chooseLocation": MessageLookupByLibrary.simpleMessage("اختيار موقع"),
         "city": MessageLookupByLibrary.simpleMessage("مدينة"),
         "confirmLocation":

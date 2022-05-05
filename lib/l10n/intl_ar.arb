@@ -49,5 +49,6 @@
   "useCurrentLocation" : "استخدام الموقع الحالي",
   "confirmLocation" : "قم بتأكيد الموقع",
   "notification" : "إشعار",
-  "noData" : "لايوجد بيانات"
+  "noData" : "لايوجد بيانات",
+  "category" : "الفئة"
 }

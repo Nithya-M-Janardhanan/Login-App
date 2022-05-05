@@ -6,6 +6,7 @@ import 'package:sample_task/provider/auth_provider.dart';
 import 'package:sample_task/provider/locale_provider.dart';
 import 'package:sample_task/route_nav/route_generator.dart';
 import 'generated/l10n.dart';
+import 'machine_test/home_provider.dart';
 import 'services/notification_service.dart';
 import 'provider/db_provider.dart';
 import 'route_nav/nav_const.dart';
@@ -33,6 +34,7 @@ class MyHomePage extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ContactsProvider()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => LocaleProvider()),
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
       ],
       child:  Consumer<LocaleProvider>(
         builder: (context, locale,child) {

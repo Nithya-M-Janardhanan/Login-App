@@ -59,6 +59,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
   shimmer: ^2.0.0
+  cached_network_image: ^3.0.0
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
@@ -88,8 +89,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/fbsample.png
-    - assets/images/googleforsample.png
+    - assets/images/
+    #- assets/images/googleforsample.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

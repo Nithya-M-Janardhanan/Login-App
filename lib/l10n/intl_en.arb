@@ -49,5 +49,6 @@
   "useCurrentLocation" : "Use Current Location",
   "confirmLocation" : "Confirm Location",
   "notification" : "Notification",
-  "noData" : "No Data"
+  "noData" : "No Data",
+  "category" : "Category"
 }
