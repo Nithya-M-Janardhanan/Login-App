@@ -27,6 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     LocalNotificationService.initializeNotificationHome(context);
     Future.microtask(() => context.read<ContactsProvider>().loadUsers());
+    Future.microtask(() => context.read<ContactsProvider>().loadProducts());
     super.initState();
   }
   Widget buildShimmer() =>

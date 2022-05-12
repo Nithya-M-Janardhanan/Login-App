@@ -1,4 +1,4 @@
-package com.ekart.ekart_app
+package com.ekart.ekart_app_nithya
 
 import io.flutter.embedding.android.FlutterActivity
 //

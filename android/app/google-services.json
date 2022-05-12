@@ -14,6 +14,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "1014118759472-rh4ie65kj165hafac5ff1jgm8ulfephf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ekart.ekart_app",
+            "certificate_hash": "2d16d02c5480e06141cc8c136e22ca4f037daf9a"
+          }
+        },
+        {
+          "client_id": "1014118759472-idf3gmgninb9bivdmg342gtvu6t6f5sa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVEydAX0CWEyuUkUnV44Ap3SA1oMm0qI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014118759472-idf3gmgninb9bivdmg342gtvu6t6f5sa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014118759472:android:fa573498f2b5f7e53d01f5",
+        "android_client_info": {
+          "package_name": "com.ekart.ekart_app_nithya"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "1014118759472-idf3gmgninb9bivdmg342gtvu6t6f5sa.apps.googleusercontent.com",
           "client_type": 3
         }

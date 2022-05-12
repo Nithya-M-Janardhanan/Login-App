@@ -1,30 +1,53 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:sample_task/machine_test/machine_api.dart';
 import 'package:sample_task/models/usermodel.dart';
 import 'package:sample_task/services/api_manager.dart';
 import '../common/const.dart';
+import '../common/helpers.dart';
 import '../common/sharedpreferences.dart';
 
+import '../machine_test/homemodel.dart';
 import '../services/db_helper.dart';
 
 class ContactsProvider with ChangeNotifier {
   final DatabaseHelperDb _db = DatabaseHelperDb.instance;
 
   UsersList? _lists;
+
   UsersList? get lists => _lists;
   List<UserModel>? user;
   bool isLoading = false;
   LoadState pageLoadingState = LoadState.loaded;
+  List<HomeModel>? homeData;
+  List<Value>? val;
+  List<CartModel>? cartModel;
+
+  // List<String>? products;
+  HomeModelList? _products;
+
+  HomeModelList? get products => _products;
+
   //
   set lists(UsersList? lists) {
     _lists = lists;
     notifyListeners();
   }
 
+  set products(HomeModelList? products) {
+    _products = products;
+    notifyListeners();
+  }
+
   Future<String?> _loadDataFromApi() async {
     //return await rootBundle.loadString('assets/$asset.json');
     return await ApiManager().getApiData();
+  }
+
+  Future<String?> _loadProductsDataFromApi() async {
+    //return await rootBundle.loadString('assets/$asset.json');
+    return await ApiServices().getDataDb();
   }
 
   Future<void> insertToUsers(UsersList? lists) async {
@@ -74,8 +97,35 @@ class ContactsProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
   void updatePageLoadingState(LoadState val) {
     pageLoadingState = val;
     notifyListeners();
   }
+
+  Future<void> insertProducts(Value value) async {
+    await _db.createProductList(value);
+    Helpers.successToast('Product added to cart');
+  }
+
+  Future<void> loadProducts() async {
+   // val= await DatabaseHelperDb.instance.getProduct();
+   cartModel= await DatabaseHelperDb.instance.getProduct();
+    // cartModel = CartModel.fromJson(jsonDecode(val));
+    notifyListeners();
+    debugPrint('length of products ${cartModel?.length}');
+  }
+
+Future<void>deleteAllData()async{
+    await DatabaseHelperDb.instance.deleteAllData();
+    await loadProducts();
+   // await DatabaseHelperDb.instance.getProduct();
+    notifyListeners();
+}
+Future<void> deleteData(int? id)async{
+    await DatabaseHelperDb.instance.deleteData(id);
+    await loadProducts();
+    notifyListeners();
+}
+
 }
