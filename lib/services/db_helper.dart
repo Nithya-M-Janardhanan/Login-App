@@ -64,9 +64,9 @@ class DatabaseHelperDb{
 
   createProductList(Value value) async{
     var productValue = value.toJson();
-    var cart = cartModel?.value?.id;
-    String str = jsonEncode(cart);
-    debugPrint('==================$str');
+    // var cart = cartModel?.value?.id;
+    // String str = jsonEncode(cart);
+    // debugPrint('==================$str');
     String jsonString = jsonEncode(productValue);
     debugPrint('!!!!!!!!!!!!!!!!!$jsonString');
     Map<String,dynamic> insertVal = {CARTLIST : jsonString};
@@ -80,7 +80,6 @@ class DatabaseHelperDb{
     List<Map<String,dynamic>>? res = await dbClient?.query(CARTTABLE);
     debugPrint('response...............$res');
      final result = res?.map((e) => CartModel.fromJson(e)).toList() ;
-     debugPrint('cartmodel............${cartModel?.id}');
    //  return List.generate(res!.length, (index) => Value.fromJson(jsonDecode(res[index][CARTLIST])));
       return result;
   }

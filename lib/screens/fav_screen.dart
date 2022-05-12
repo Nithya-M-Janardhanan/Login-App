@@ -60,6 +60,7 @@ class _FavScreenState extends State<FavScreen> {
                 subtitle: Text(snapshot.cartModel?[index].value?.actualPrice?? ''),
                 trailing: IconButton(
                   onPressed: (){
+                    print('????????????${snapshot.cartModel?[index].id}');
                      context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
                   },
                   icon: Icon(Icons.delete),
