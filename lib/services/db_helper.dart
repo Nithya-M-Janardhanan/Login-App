@@ -21,8 +21,10 @@ class DatabaseHelperDb{
   static const String CARTTABLE = 'cart';
   static const String CARTID = 'cartid';
   static const CARTLIST = 'cartlist';
-  int? id;
+  static const COUNT = 'count';
+  int? itemCount;
   CartModel? cartModel;
+  var productValue;
 
 
   Future<Database?> get db async{
@@ -42,7 +44,7 @@ class DatabaseHelperDb{
   _onCreate(Database db,int version) async{
     //await db.execute("CREATE TABLE $TABLE($ID INTEGER PRIMARY KEY,$NAME TEXT,$USERNAME TEXT,$EMAIL TEXT,$PROFILEIMAGE TEXT,$STREET TEXT,$PHONE TEXT,$WEBSITE TEXT,$COMPANY TEXT)");
     await db.execute("CREATE TABLE $TABLE($ID INTEGER PRIMARY KEY,$USER TEXT)");
-    await db.execute("CREATE TABLE $CARTTABLE($CARTID INTEGER PRIMARY KEY,$CARTLIST TEXT)");
+    await db.execute("CREATE TABLE $CARTTABLE($CARTID INTEGER PRIMARY KEY,$CARTLIST TEXT,$COUNT INTEGER)");
   }
   createUserList(UserModel user) async{
     var userValue = user.toJson();
@@ -63,16 +65,22 @@ class DatabaseHelperDb{
   }
 
   createProductList(Value value) async{
-    var productValue = value.toJson();
-    // var cart = cartModel?.value?.id;
-    // String str = jsonEncode(cart);
-    // debugPrint('==================$str');
+    var dbClient = await db;
+     productValue = value.toJson();
     String jsonString = jsonEncode(productValue);
     debugPrint('!!!!!!!!!!!!!!!!!$jsonString');
-    Map<String,dynamic> insertVal = {CARTLIST : jsonString};
-    var dbClient = await db;
-    final result = await dbClient?.insert(CARTTABLE, insertVal,conflictAlgorithm: ConflictAlgorithm.replace);
-    return result;
+    List<CartModel>? getList = await getProduct();
+    final check = getList?.firstWhere((element) => element.value?.id == value.id,orElse: ()=>CartModel());
+    if( check?.value != null){
+     int? count = check?.count ?? 0;
+     count = count + 1;
+     await updateCount(check?.id, count);
+    }else{
+      Map<String,dynamic> insertVal = {CARTLIST : jsonString,COUNT:1};
+      final result = await dbClient?.insert(CARTTABLE, insertVal,conflictAlgorithm: ConflictAlgorithm.replace);
+      return result;
+    }
+
   }
 
   Future<List<CartModel>?> getProduct()async{
@@ -91,5 +99,9 @@ class DatabaseHelperDb{
 Future<void>deleteData(int? id)async{
   var dbClient = await db;
   await dbClient?.delete(CARTTABLE,where: '$CARTID = ?',whereArgs: [id]);
+}
+Future<void> updateCount(int? id,int? count)async{
+    var dbClient = await db;
+    await dbClient?.rawUpdate('UPDATE $CARTTABLE SET $COUNT = $count WHERE $CARTID = $id');
 }
 }
