@@ -35,7 +35,8 @@ class _MainScreenState extends State<MainScreen> {
       // BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined,color: Colors.teal),label: 'Cart',),
       BottomNavigationBarItem(icon: Consumer<ContactsProvider>(
         builder: (context, snapshot,child) {
-          String num = snapshot.cartModel?.length.toString() ?? '0';
+          // String num = snapshot.cartModel?.length.toString() ?? '0';
+          String num = snapshot.totalCartCount.toString();
           return Stack(children: [
             Image.asset(Const.cartIcon,height: 18,width: 18,),
             Padding(

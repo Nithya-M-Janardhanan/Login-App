@@ -63,7 +63,7 @@ class _FavScreenState extends State<FavScreen> {
                   IconButton(onPressed: ()async{
                     int count = snapshot.cartModel?[index].count ?? 0;
                     count = count + 1;
-                        context.read<ContactsProvider>().addProductCart(snapshot.cartModel?[index].id, count);
+                        context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, count);
                        debugPrint('count in cart screen...${snapshot.cartModel?[index].count}');
                   }, icon: Icon(Icons.add)),
                   Text('${snapshot.cartModel?[index].count}'),
@@ -75,7 +75,7 @@ class _FavScreenState extends State<FavScreen> {
                       if(countMinus <= 0){
                         context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
                       }else{
-                        context.read<ContactsProvider>().addProductCart(snapshot.cartModel?[index].id, countMinus);
+                        context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, countMinus);
                       }
                     },icon: Icon(Icons.minimize_sharp),),
                   )

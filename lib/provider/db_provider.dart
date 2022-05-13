@@ -28,6 +28,7 @@ class ContactsProvider with ChangeNotifier {
   HomeModelList? _products;
 
   HomeModelList? get products => _products;
+  int totalCartCount = 0;
 
   //
   set lists(UsersList? lists) {
@@ -113,7 +114,13 @@ class ContactsProvider with ChangeNotifier {
   Future<void> loadProducts() async {
    // val= await DatabaseHelperDb.instance.getProduct();
    cartModel= await DatabaseHelperDb.instance.getProduct();
-    // cartModel = CartModel.fromJson(jsonDecode(val));
+   totalCartCount = 0;
+   cartModel?.forEach((element) {
+     if(element.count != null){
+       totalCartCount = totalCartCount + element.count!.toInt();
+     }
+     debugPrint('total cart count = $totalCartCount');
+   });
     notifyListeners();
     debugPrint('length of products ${cartModel?.length}');
   }
@@ -121,6 +128,7 @@ class ContactsProvider with ChangeNotifier {
 Future<void>deleteAllData()async{
     await DatabaseHelperDb.instance.deleteAllData();
     await loadProducts();
+    totalCartCount = 0;
    // await DatabaseHelperDb.instance.getProduct();
     notifyListeners();
 }
@@ -129,11 +137,21 @@ Future<void> deleteData(int? id)async{
     await loadProducts();
     notifyListeners();
 }
-Future<void> addProductCart(int? id,int? count) async{
+Future<void> updateCountfn(int? id,int? count) async{
     await DatabaseHelperDb.instance.updateCount(id, count);
     await loadProducts();
     notifyListeners();
 }
-
+// Future<void> getTotalCartCount()async{
+//     List<CartModel>? list = await DatabaseHelperDb.instance.getProduct();
+//      list?.forEach((element) {
+//        if(element.count != null){
+//          totalCartCount = totalCartCount + element.count!.toInt();
+//        }
+//        print(element.count.runtimeType);
+//       debugPrint('total cart count = $totalCartCount');
+//     });
+//
+// }
 
 }

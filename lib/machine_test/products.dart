@@ -113,7 +113,8 @@ class ProductsWidget extends StatelessWidget {
 
                             Container(
                               alignment: Alignment.center,
-                              child: ElevatedButton(
+                              child:
+                              ElevatedButton(
                                 style: ElevatedButton.styleFrom(primary: HexColor('#199B3B'),minimumSize: Size(110, 30)),
                                 onPressed: (){
                                    context.read<ContactsProvider>().insertProducts(productItem.values![index]);
