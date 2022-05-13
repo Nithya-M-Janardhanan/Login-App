@@ -5,6 +5,7 @@ import 'package:sample_task/machine_test/homemodel.dart';
 import 'package:sample_task/provider/db_provider.dart';
 
 import '../generated/l10n.dart';
+import '../services/db_helper.dart';
 
 class FavScreen extends StatefulWidget {
   @override
@@ -57,7 +58,28 @@ class _FavScreenState extends State<FavScreen> {
               child: ListTile(
                 leading: Image.network(snapshot.cartModel?[index].value?.image??''),
                 title: Text(snapshot.cartModel?[index].value?.name??''),
-                subtitle: Text(snapshot.cartModel?[index].value?.actualPrice?? ''),
+                subtitle: Row(children:[
+                  Text(snapshot.cartModel?[index].value?.actualPrice?? ''),
+                  IconButton(onPressed: ()async{
+                    int count = snapshot.cartModel?[index].count ?? 0;
+                    count = count + 1;
+                        context.read<ContactsProvider>().addProductCart(snapshot.cartModel?[index].id, count);
+                       debugPrint('count in cart screen...${snapshot.cartModel?[index].count}');
+                  }, icon: Icon(Icons.add)),
+                  Text('${snapshot.cartModel?[index].count}'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: IconButton(onPressed: (){
+                      int countMinus = snapshot.cartModel?[index].count ?? 0;
+                      countMinus = countMinus - 1;
+                      if(countMinus <= 0){
+                        context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
+                      }else{
+                        context.read<ContactsProvider>().addProductCart(snapshot.cartModel?[index].id, countMinus);
+                      }
+                    },icon: Icon(Icons.minimize_sharp),),
+                  )
+                ]),
                 trailing: IconButton(
                   onPressed: (){
                     print('????????????${snapshot.cartModel?[index].count}');

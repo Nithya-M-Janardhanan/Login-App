@@ -21,7 +21,7 @@ class ContactsProvider with ChangeNotifier {
   bool isLoading = false;
   LoadState pageLoadingState = LoadState.loaded;
   List<HomeModel>? homeData;
-  List<Value>? val;
+  // List<Value>? val;
   List<CartModel>? cartModel;
 
   // List<String>? products;
@@ -105,7 +105,9 @@ class ContactsProvider with ChangeNotifier {
 
   Future<void> insertProducts(Value value) async {
     await _db.createProductList(value);
+    await loadProducts();
     Helpers.successToast('Product added to cart');
+    notifyListeners();
   }
 
   Future<void> loadProducts() async {
@@ -127,5 +129,11 @@ Future<void> deleteData(int? id)async{
     await loadProducts();
     notifyListeners();
 }
+Future<void> addProductCart(int? id,int? count) async{
+    await DatabaseHelperDb.instance.updateCount(id, count);
+    await loadProducts();
+    notifyListeners();
+}
+
 
 }

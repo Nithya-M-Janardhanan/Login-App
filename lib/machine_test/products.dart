@@ -117,8 +117,7 @@ class ProductsWidget extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(primary: HexColor('#199B3B'),minimumSize: Size(110, 30)),
                                 onPressed: (){
                                    context.read<ContactsProvider>().insertProducts(productItem.values![index]);
-                                   context.read<ContactsProvider>().loadProducts();
-                                  // Navigator.pushNamed(context, cartScreenRoute);
+                                   // context.read<ContactsProvider>().loadProducts();
                                 },
                                 child: Text('ADD'),
 
