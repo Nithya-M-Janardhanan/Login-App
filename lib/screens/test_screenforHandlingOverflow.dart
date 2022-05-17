@@ -93,7 +93,7 @@ class _TestScreenState extends State<TestScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            Text('kjdsncjksncdw',),
+                            Text('kjdsncjksncdw'),
                             Text('kjnbdjknd kojedkewjdkwejdwjkjnhkjhnknhkjhkh ghfdhtr fghtfhy rtrhr ntrhreh rtnj werwe dfgbedrge thtrhntr',overflow: TextOverflow.fade,),
                           ],
                         ),
