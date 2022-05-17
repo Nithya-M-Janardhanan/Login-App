@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 
 import '../common/const.dart';
+import '../screens/test_screen.dart';
 import 'hexcolor.dart';
 
 class SearchWidget extends StatefulWidget {
@@ -25,7 +26,11 @@ class _SearchWidgetState extends State<SearchWidget> {
           controller: textController,
           decoration:  InputDecoration(
               prefixIcon: Image.asset(Const.searchIcon,height: 1.0,width: 1.0,),
-              suffixIcon: Image.asset(Const.scanIcon,height: 1.0,width: 1.0,),
+              suffixIcon: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const TestScreen()));
+                },
+                  child: Image.asset(Const.scanIcon,height: 1.0,width: 1.0,)),
               border: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 3.0)),
               hintText: 'Search',hintStyle: TextStyle(color: HexColor('#727272'),fontSize: 16) ),

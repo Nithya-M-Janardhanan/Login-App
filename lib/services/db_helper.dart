@@ -22,7 +22,6 @@ class DatabaseHelperDb{
   static const String CARTID = 'cartid';
   static const CARTLIST = 'cartlist';
   static const COUNT = 'count';
-  static const PCOUNT = 'pcount';
   int? itemCount;
   CartModel? cartModel;
   var productValue;
@@ -51,14 +50,12 @@ class DatabaseHelperDb{
   createUserList(UserModel user) async{
     var userValue = user.toJson();
     String jsonString = jsonEncode(userValue);
-    debugPrint('!!!!!!!!!!!!!!!!!$jsonString');
     Map<String,dynamic> insertVal = {USER : jsonString};
     var dbClient = await db;
     final result = await dbClient?.insert(TABLE, insertVal,conflictAlgorithm: ConflictAlgorithm.replace);
     return result;
   }
   Future<List<UserModel>> getUserList()async{
-    debugPrint('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     await ApiManager().getDbData();
     var dbClient = await db;
     List<Map<String,dynamic>> res = await dbClient!.query(TABLE);
@@ -70,7 +67,6 @@ class DatabaseHelperDb{
     var dbClient = await db;
      productValue = value.toJson();
     String jsonString = jsonEncode(productValue);
-    debugPrint('!!!!!!!!!!!!!!!!!$jsonString');
     List<CartModel>? getList = await getProduct();
     final check = getList?.firstWhere((element) => element.value?.id == value.id,orElse: ()=>CartModel());
     if( check?.value != null){
@@ -84,36 +80,13 @@ class DatabaseHelperDb{
     }
 
   }
-
-
   Future<List<CartModel>?> getProduct()async{
     var dbClient = await db;
     List<Map<String,dynamic>>? res = await dbClient?.query(CARTTABLE);
-    debugPrint('response...............$res');
      final result = res?.map((e) => CartModel.fromJson(e)).toList() ;
-
-   //  return List.generate(res!.length, (index) => Value.fromJson(jsonDecode(res[index][CARTLIST])));
       return result;
   }
-  ///product count
-  // Future<List<ProductModel>?> getProductCount()async{
-  //   var dbClient = await db;
-  //   List<Map<String,dynamic>>? res = await dbClient?.query(CARTTABLE);
-  //   // debugPrint('response...............$res');
-  //   final result = res?.map((e) => ProductModel.fromJson(e)).toList() ;
-  //   //  return List.generate(res!.length, (index) => Value.fromJson(jsonDecode(res[index][CARTLIST])));
-  //   return result;
-  // }
-  Future<List<Value>?> homeProductCount()async{
-    var dbClient = await db;
-    List<Map<String,dynamic>>? res = await dbClient?.query(CARTTABLE);
-    // debugPrint('response...............$res');
-    final result = res?.map((e) => Value.fromJson(e)).toList() ;
-    debugPrint('///////////////// result   ${result?.length}');
-    //  return List.generate(res!.length, (index) => Value.fromJson(jsonDecode(res[index][CARTLIST])));
-    return result;
-  }
-  ///
+
   Future<void> deleteAllData()async{
   var dbClient = await db;
   await dbClient?.delete(CARTTABLE);

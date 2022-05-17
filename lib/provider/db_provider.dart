@@ -20,37 +20,17 @@ class ContactsProvider with ChangeNotifier {
   List<UserModel>? user;
   bool isLoading = false;
   LoadState pageLoadingState = LoadState.loaded;
-  List<Value>? valueList;
-  // List<Value>? val;
   List<CartModel>? cartModel;
-
-  // List<String>? products;
-  HomeModelList? _products;
-  List<Value>? productModel;
-  HomeModelList? get products => _products;
   int totalCartCount = 0;
-  int? productCount = 0;
 
-
-  //
   set lists(UsersList? lists) {
     _lists = lists;
-    notifyListeners();
-  }
-
-  set products(HomeModelList? products) {
-    _products = products;
     notifyListeners();
   }
 
   Future<String?> _loadDataFromApi() async {
     //return await rootBundle.loadString('assets/$asset.json');
     return await ApiManager().getApiData();
-  }
-
-  Future<String?> _loadProductsDataFromApi() async {
-    //return await rootBundle.loadString('assets/$asset.json');
-    return await ApiServices().getDataDb();
   }
 
   Future<void> insertToUsers(UsersList? lists) async {
@@ -62,12 +42,8 @@ class ContactsProvider with ChangeNotifier {
   }
 
   Future<void> loadUsers() async {
-    //lists?.userList = await DatabaseHelperDb.instance.getUserList();
     updatePageLoadingState(LoadState.loading);
     user = await DatabaseHelperDb.instance.getUserList();
-    //user = await ApiManager().getData();
-    //lists?.userList = user;
-    debugPrint('length ${user?.length}');
     if (user == null || user!.isEmpty) {
       String? jsonString = await _loadDataFromApi();
       final jsonResponse = json.decode(jsonString!);
@@ -76,10 +52,6 @@ class ContactsProvider with ChangeNotifier {
         await _db.createUserList(element);
       });
       user = await _db.getUserList();
-      //user = UsersList.fromJson(jsonResponse);
-      // if (user != null) {
-      //   await insertToUsers(lists);
-      // }
     }
     updatePageLoadingState(LoadState.loaded);
     notifyListeners();
@@ -89,7 +61,6 @@ class ContactsProvider with ChangeNotifier {
   Future<void> loadContacts() async {
     lists?.userList = await DatabaseHelperDb.instance.getUserList();
     notifyListeners();
-    debugPrint('length ${lists?.userList?.length}');
     if (lists?.userList == null) {
       String? jsonString = await _loadDataFromApi();
       final jsonResponse = json.decode(jsonString!);
@@ -114,7 +85,6 @@ class ContactsProvider with ChangeNotifier {
   }
 
   Future<void> loadProducts() async {
-   // val= await DatabaseHelperDb.instance.getProduct();
    cartModel= await DatabaseHelperDb.instance.getProduct();
    totalCartCount = 0;
    cartModel?.forEach((element) {
@@ -124,14 +94,6 @@ class ContactsProvider with ChangeNotifier {
    });
     notifyListeners();
   }
-  /// product count
-  Future<void> getProductCount() async {
-    // val= await DatabaseHelperDb.instance.getProduct();
-    productModel= await DatabaseHelperDb.instance.homeProductCount();
-    notifyListeners();
-    debugPrint('length of products model ${productModel?.length}');
-  }
-  ///
 
 Future<void>deleteAllData()async{
     await DatabaseHelperDb.instance.deleteAllData();
@@ -150,32 +112,5 @@ Future<void> updateCountfn(int? id,int? count) async{
     await loadProducts();
     notifyListeners();
 }
-
-//   Future<void> getCount(int? id) async{
-//     valueList= await DatabaseHelperDb.instance.homeProductCount();
-//   int? num = valueList?.length;
-//   for(int i= 0;i <= num!; i++){
-//     debugPrint('_________________________________${valueList?.length}');
-//     if(id == valueList?[i].id){
-//       productCount = valueList?[i].prodCount;
-//       debugPrint('id of product ....$id');
-//       debugPrint('id of product ....${cartModel?[i].id}');
-//       notifyListeners();
-//     }
-//   }
-// }
-
-
-// Future<void> getTotalCartCount()async{
-//     List<CartModel>? list = await DatabaseHelperDb.instance.getProduct();
-//      list?.forEach((element) {
-//        if(element.count != null){
-//          totalCartCount = totalCartCount + element.count!.toInt();
-//        }
-//        print(element.count.runtimeType);
-//       debugPrint('total cart count = $totalCartCount');
-//     });
-//
-// }
 
 }

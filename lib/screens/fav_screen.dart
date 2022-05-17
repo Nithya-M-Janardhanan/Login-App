@@ -5,7 +5,6 @@ import 'package:sample_task/machine_test/homemodel.dart';
 import 'package:sample_task/provider/db_provider.dart';
 
 import '../generated/l10n.dart';
-import '../services/db_helper.dart';
 
 class FavScreen extends StatefulWidget {
   @override
@@ -43,8 +42,6 @@ class _FavScreenState extends State<FavScreen> {
                 }
                 );
 
-          //showAlertDialog();
-
         }, icon: Icon(Icons.delete),))
       ],),
       body:  Consumer<ContactsProvider>(
@@ -64,7 +61,6 @@ class _FavScreenState extends State<FavScreen> {
                     int count = snapshot.cartModel?[index].count ?? 0;
                     count = count + 1;
                         context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, count);
-                       debugPrint('count in cart screen...${snapshot.cartModel?[index].count}');
                   }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.add))),
                   Text('${snapshot.cartModel?[index].count}'),
                   IconButton(onPressed: (){
