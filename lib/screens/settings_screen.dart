@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sample_task/provider/db_provider.dart';
 
 import '../generated/l10n.dart';
 import '../machine_test/banner.dart';
@@ -18,6 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     Future.microtask(() => context.read<HomeProvider>().getData());
+    Future.microtask(() => context.read<ContactsProvider>().getProductCount());
     super.initState();
   }
   @override

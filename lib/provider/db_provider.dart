@@ -20,15 +20,17 @@ class ContactsProvider with ChangeNotifier {
   List<UserModel>? user;
   bool isLoading = false;
   LoadState pageLoadingState = LoadState.loaded;
-  List<HomeModel>? homeData;
+  List<Value>? valueList;
   // List<Value>? val;
   List<CartModel>? cartModel;
 
   // List<String>? products;
   HomeModelList? _products;
-
+  List<Value>? productModel;
   HomeModelList? get products => _products;
   int totalCartCount = 0;
+  int? productCount = 0;
+
 
   //
   set lists(UsersList? lists) {
@@ -119,11 +121,17 @@ class ContactsProvider with ChangeNotifier {
      if(element.count != null){
        totalCartCount = totalCartCount + element.count!.toInt();
      }
-     debugPrint('total cart count = $totalCartCount');
    });
     notifyListeners();
-    debugPrint('length of products ${cartModel?.length}');
   }
+  /// product count
+  Future<void> getProductCount() async {
+    // val= await DatabaseHelperDb.instance.getProduct();
+    productModel= await DatabaseHelperDb.instance.homeProductCount();
+    notifyListeners();
+    debugPrint('length of products model ${productModel?.length}');
+  }
+  ///
 
 Future<void>deleteAllData()async{
     await DatabaseHelperDb.instance.deleteAllData();
@@ -142,6 +150,22 @@ Future<void> updateCountfn(int? id,int? count) async{
     await loadProducts();
     notifyListeners();
 }
+
+//   Future<void> getCount(int? id) async{
+//     valueList= await DatabaseHelperDb.instance.homeProductCount();
+//   int? num = valueList?.length;
+//   for(int i= 0;i <= num!; i++){
+//     debugPrint('_________________________________${valueList?.length}');
+//     if(id == valueList?[i].id){
+//       productCount = valueList?[i].prodCount;
+//       debugPrint('id of product ....$id');
+//       debugPrint('id of product ....${cartModel?[i].id}');
+//       notifyListeners();
+//     }
+//   }
+// }
+
+
 // Future<void> getTotalCartCount()async{
 //     List<CartModel>? list = await DatabaseHelperDb.instance.getProduct();
 //      list?.forEach((element) {

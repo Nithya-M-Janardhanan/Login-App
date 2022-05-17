@@ -65,24 +65,20 @@ class _FavScreenState extends State<FavScreen> {
                     count = count + 1;
                         context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, count);
                        debugPrint('count in cart screen...${snapshot.cartModel?[index].count}');
-                  }, icon: Icon(Icons.add)),
+                  }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.add))),
                   Text('${snapshot.cartModel?[index].count}'),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: IconButton(onPressed: (){
-                      int countMinus = snapshot.cartModel?[index].count ?? 0;
-                      countMinus = countMinus - 1;
-                      if(countMinus <= 0){
-                        context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
-                      }else{
-                        context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, countMinus);
-                      }
-                    },icon: Icon(Icons.minimize_sharp),),
-                  )
+                  IconButton(onPressed: (){
+                    int countMinus = snapshot.cartModel?[index].count ?? 0;
+                    countMinus = countMinus - 1;
+                    if(countMinus <= 0){
+                      context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
+                    }else{
+                      context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, countMinus);
+                    }
+                  },icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.remove)),)
                 ]),
                 trailing: IconButton(
                   onPressed: (){
-                    print('????????????${snapshot.cartModel?[index].count}');
                      context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
                   },
                   icon: Icon(Icons.delete),

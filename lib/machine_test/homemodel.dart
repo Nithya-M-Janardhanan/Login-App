@@ -11,15 +11,18 @@ class HomeModel {
   HomeModel({
     this.status,
     this.homeData,
+
   });
 
   bool? status;
   List<HomeDatum>? homeData;
 
+
   factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
     status: json["status"],
     homeData: List<HomeDatum>.from(
         json["homeData"].map((x) => HomeDatum.fromJson(x))),
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +30,7 @@ class HomeModel {
     "homeData": homeData != null
         ? List<dynamic>.from(homeData!.map((x) => x.toJson()))
         : null,
+
   };
 }
 
@@ -34,14 +38,17 @@ class HomeDatum {
   HomeDatum({
     this.type,
     this.values,
+
   });
 
   String? type;
   List<Value>? values;
 
+
   factory HomeDatum.fromJson(Map<String, dynamic> json) => HomeDatum(
     type: json["type"],
     values: List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +56,7 @@ class HomeDatum {
     "values": values != null
         ? List<dynamic>.from(values!.map((x) => x.toJson()))
         : null,
+
   };
 }
 

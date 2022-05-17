@@ -4,17 +4,18 @@ import 'package:provider/provider.dart';
 import 'package:sample_task/provider/db_provider.dart';
 import '../common/const.dart';
 import '../common/helpers.dart';
+import '../services/db_helper.dart';
 import 'hexcolor.dart';
 import 'home_provider.dart';
 import 'homemodel.dart';
 
 class ProductsWidget extends StatelessWidget {
+  bool visible = false;
+  int? pcount;
   @override
   Widget build(BuildContext context) {
-    return
-
-      Consumer<HomeProvider>(
-          builder: (context, snapshot,child) {
+    return Consumer2<HomeProvider,ContactsProvider>(
+          builder: (context, snapshot,model,child) {
             final productItem = snapshot.homeModel?.homeData?.firstWhere(
               ((element) {
                 if (element.type != null) {
@@ -35,6 +36,8 @@ class ProductsWidget extends StatelessWidget {
                 itemCount: productItem.values?.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context,index){
+                  final check = model.cartModel?.firstWhere((element) => element.value?.id == productItem.values?[index].id,orElse: ()=>CartModel());
+                   // int? countItem = model.cartModel?[index].count;
                   return Container(
 
                       width: 170.0,
@@ -113,16 +116,62 @@ class ProductsWidget extends StatelessWidget {
 
                             Container(
                               alignment: Alignment.center,
-                              child:
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(primary: HexColor('#199B3B'),minimumSize: Size(110, 30)),
-                                onPressed: (){
-                                   context.read<ContactsProvider>().insertProducts(productItem.values![index]);
-                                   // context.read<ContactsProvider>().loadProducts();
-                                },
-                                child: Text('ADD'),
+                              child:Column(children: [
+                                check?.count != null ?
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: Row(
+                                    children: [
+                                      IconButton(onPressed: (){
+                                        final check = model.cartModel?.firstWhere((element) => element.value?.id == productItem.values?[index].id,orElse: ()=>CartModel());
+                                        int countMinus = check?.count ?? 0;
+                                        countMinus = countMinus - 1;
+                                        if(countMinus <= 0){
+                                          context.read<ContactsProvider>().deleteData(check?.id);
+                                        }else{
+                                          context.read<ContactsProvider>().updateCountfn(check?.id, countMinus);
+                                        }
+                                        // int countMinus = model.cartModel?[index].count ?? 0;
+                                        // countMinus = countMinus - 1;
+                                        // if(countMinus <= 0){
+                                        //   context.read<ContactsProvider>().deleteData(model.cartModel?[index].id);
+                                        // }else{
+                                        //   context.read<ContactsProvider>().updateCountfn(model.cartModel?[index].id, countMinus);
+                                        // }
+                                      }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.remove,color: HexColor('#199B3B'),))),
+                                       // count(model.cartModel),
+                                       check?.count == null ? Text('0') : Text('${check?.count}'),
+                                      IconButton(onPressed: ()async{
+                                       final check = model.cartModel?.firstWhere((element) => element.value?.id == productItem.values?[index].id,orElse: ()=>CartModel());
+                                       if(check?.value != null){
+                                         if(check?.count != null){
+                                           int? count = check?.count ?? 0;
+                                           count = count + 1;
+                                           // await DatabaseHelperDb.instance.updateCount(check?.id, count);
+                                           context.read<ContactsProvider>().updateCountfn(check?.id, count);
+                                         }
+                                       }else{
+                                         context.read<ContactsProvider>().insertProducts(productItem.values![index]);
+                                       }
 
-                              ),
+                                        // int count = model.productModel?[index].prodCount ?? 0;
+                                        // count = count + 1;
+                                        // context.read<ContactsProvider>().updateCountfn(model.productModel?[index].id, count);
+                                        // context.read<ContactsProvider>().getCount(model.productModel?[index].id);
+                                      }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.add,color: HexColor('#199B3B'),))),
+                                    ],
+                                  ),
+                                ) :
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(primary: HexColor('#199B3B'),minimumSize: Size(110, 30)),
+                                  onPressed: (){
+                                    context.read<ContactsProvider>().insertProducts(productItem.values![index]);
+                                    // context.read<ContactsProvider>().loadProducts();
+                                  },
+                                  child: Text('ADD'),
+                                ),
+                              ],)
+
                             )
                           ],
                         ),
@@ -135,5 +184,13 @@ class ProductsWidget extends StatelessWidget {
           }
       );
 
+  }
+
+  Widget count(List<CartModel>? cartModel){
+    return Column(
+      children: List.generate(cartModel!.length, (index) {
+        return Text('${cartModel[index].count}');
+      })
+    );
   }
 }
