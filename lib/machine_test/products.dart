@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_task/provider/db_provider.dart';
 import '../common/const.dart';
@@ -49,7 +50,7 @@ class ProductsWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(right: 10.0),
+                              padding:  EdgeInsets.only(right: 10.0),
                               child: Container(
                                 margin: const EdgeInsets.only(top: 10),
                                 child: Row(
@@ -65,7 +66,7 @@ class ProductsWidget extends StatelessWidget {
                                             child: Text('${productItem.values?[index].offer}',style: const TextStyle(color: Colors.white,fontSize: 10),),
                                           ),
                                           const Icon(Icons.percent,color: Colors.white,size: 10,),
-                                          const Text('OFF',style: TextStyle(color: Colors.white,fontSize: 10))
+                                           Text('OFF',style: TextStyle(color: Colors.white,fontSize: 10))
                                         ],
                                       )
                                     ],),
@@ -76,7 +77,7 @@ class ProductsWidget extends StatelessWidget {
                                           child: Image.asset(
                                             Const.favIcon,
                                             key: UniqueKey(),
-                                            height: 19.0,
+                                            height: 19.h,
                                             width: 19.0,
                                           )
                                       ),
@@ -94,7 +95,7 @@ class ProductsWidget extends StatelessWidget {
                             Container(
                                 margin: const EdgeInsets.only( left: 11.0),
                                 child: productItem.values![index].isExpress! ?
-                                Image.asset(Const.truckImg,height: 14,width: 22,) : const SizedBox()
+                                Image.asset(Const.truckImg,height: 14,width: 22,) :  Container(height: 14,width: 22,)
                             ),
                             Container(
                                 margin: const EdgeInsets.only( left: 11.0),
@@ -107,7 +108,7 @@ class ProductsWidget extends StatelessWidget {
                             ),
                             Container(
                               margin: const EdgeInsets.only( left: 11.0,),
-                              child: Text(productItem.values?[index].name ?? '',style: const TextStyle(fontSize: 14,),maxLines: 2,),
+                              child: Text((productItem.values?[index].name ?? '')+'\n',style:  TextStyle(fontSize: 14.sp,),maxLines: 2,),
                             ),
 
                             Container(

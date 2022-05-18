@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_task/screens/lottie.dart';
 import '../common/sharedpreferences.dart';
@@ -25,13 +26,19 @@ class _SplashScreenState extends State<SplashScreen> {
     getValidationData();
     Timer(const Duration(seconds: 2), () async {
       if (await SharedPreferenceHelper.getSensor() == true) {
-        isLoggedin.isEmpty
-            ? Navigator.pushReplacementNamed(context, "/login")
-            : Navigator.pushReplacementNamed(context, "/sensor");
+        if(mounted){
+          isLoggedin.isEmpty
+              ? Navigator.pushReplacementNamed(context, "/login")
+              : Navigator.pushReplacementNamed(context, "/sensor");
+        }
+
       } else {
-        isLoggedin.isEmpty
-            ? Navigator.pushReplacementNamed(context, "/login")
-            : Navigator.pushReplacementNamed(context, "/mainscreen");
+        if(mounted){
+          isLoggedin.isEmpty
+              ? Navigator.pushReplacementNamed(context, "/login")
+              : Navigator.pushReplacementNamed(context, "/mainscreen");
+        }
+
       }
      // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomepage()));
     });
