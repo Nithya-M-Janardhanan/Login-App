@@ -10,7 +10,7 @@ import '../screens/account_screen.dart';
 import '../route_nav/nav_const.dart';
 import '../route_nav/route_generator.dart';
 import '../screens/settings_screen.dart';
-import '../screens/fav_screen.dart';
+import '../screens/cart_screen.dart';
 import 'package:sample_task/screens/homescreen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                   onGenerateRoute: (settings) => NavRouteGenerator.generateRoute(settings));
             case 2:
               return CupertinoTabView(builder: (context){
-                return CupertinoPageScaffold(child: FavScreen());
+                return CupertinoPageScaffold(child: CartScreen());
               },
                   onGenerateRoute: (settings) => NavRouteGenerator.generateRoute(settings));
             case 3:
@@ -106,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
     return [
       HomeScreen(),
       SettingsScreen(),
-      FavScreen(),
+      CartScreen(),
       AccountScreen(),
     ];
   }

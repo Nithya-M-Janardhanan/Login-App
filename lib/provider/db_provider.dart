@@ -21,7 +21,9 @@ class ContactsProvider with ChangeNotifier {
   bool isLoading = false;
   LoadState pageLoadingState = LoadState.loaded;
   List<CartModel>? cartModel;
+  List<FavouritesModel>? favList;
   int totalCartCount = 0;
+  bool isFav = false;
 
   set lists(UsersList? lists) {
     _lists = lists;
@@ -83,6 +85,11 @@ class ContactsProvider with ChangeNotifier {
     Helpers.successToast('Product added to cart');
     notifyListeners();
   }
+  Future<void> insertFavItems(Value value) async{
+    await _db.createFavouritesList(value);
+    await loadFavList();
+    notifyListeners();
+  }
 
   Future<void> loadProducts() async {
    cartModel= await DatabaseHelperDb.instance.getProduct();
@@ -92,6 +99,10 @@ class ContactsProvider with ChangeNotifier {
        totalCartCount = totalCartCount + element.count!.toInt();
      }
    });
+    notifyListeners();
+  }
+  Future<void> loadFavList() async{
+    favList = await DatabaseHelperDb.instance.getFavoritesList();
     notifyListeners();
   }
 
@@ -107,6 +118,12 @@ Future<void> deleteData(int? id)async{
     await loadProducts();
     notifyListeners();
 }
+  Future<void> deleteFavouritesItem(int? id)async{
+    isFav = false;
+    await DatabaseHelperDb.instance.deleteFavItem(id);
+    await loadFavList();
+    notifyListeners();
+  }
 Future<void> updateCountfn(int? id,int? count) async{
     await DatabaseHelperDb.instance.updateCount(id, count);
     await loadProducts();

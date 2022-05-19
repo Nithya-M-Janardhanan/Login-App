@@ -19,6 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     Future.microtask(() => context.read<HomeProvider>().getData());
+    Future.microtask(() => context.read<ContactsProvider>().loadFavList());
     super.initState();
   }
   @override

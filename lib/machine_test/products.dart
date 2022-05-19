@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,7 @@ import 'home_provider.dart';
 import 'homemodel.dart';
 
 class ProductsWidget extends StatelessWidget {
+  ValueNotifier<bool> isfav = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
     return Consumer2<HomeProvider,ContactsProvider>(
@@ -36,6 +39,7 @@ class ProductsWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context,index){
                   final check = model.cartModel?.firstWhere((element) => element.value?.id == productItem.values?[index].id,orElse: ()=>CartModel());
+                  final favCheck = model.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
                   return Container(
                       width: 170.0,
                       margin: const EdgeInsets.only(left: 10),
@@ -72,14 +76,27 @@ class ProductsWidget extends StatelessWidget {
                                     ],),
                                     Container(
                                       //margin: const EdgeInsets.only(top: 10.0),
-                                      child: AnimatedSwitcher(
-                                          duration: const Duration(milliseconds: 300),
-                                          child: Image.asset(
-                                            Const.favIcon,
-                                            key: UniqueKey(),
-                                            height: 19.h,
-                                            width: 19.0,
-                                          )
+                                      child: ValueListenableBuilder<bool>(
+                                        valueListenable: isfav,
+                                        builder: (context, snapshot,child) {
+                                          return GestureDetector(
+                                            onTap: (){
+                                              final check = model.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
+                                              if(check?.favourites == null){
+                                                context.read<ContactsProvider>().insertFavItems(productItem.values![index]);
+                                              }else{
+                                                context.read<ContactsProvider>().deleteFavouritesItem(check?.id);
+                                              }
+                                            },
+                                            child:
+                                            favCheck?.favourites != null ? Icon(Icons.favorite,color: Colors.red,) :
+                                            Image.asset(
+                                              Const.favIcon,
+                                              height: 19.h,
+                                              width: 19.0,
+                                            ),
+                                          );
+                                        }
                                       ),
                                     ),
                                   ],

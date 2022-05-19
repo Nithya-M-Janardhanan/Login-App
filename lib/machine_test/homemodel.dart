@@ -125,3 +125,18 @@ class CartModel{
     "count" : count
   };
 }
+class FavouritesModel{
+  int? id;
+  Value? favourites;
+  FavouritesModel({this.id,this.favourites});
+  factory FavouritesModel.fromJson(Map<String,dynamic> json){
+    return FavouritesModel(
+      id: json['favid'],
+      favourites: Value.fromJson(jsonDecode(json['favlist']))
+    );
+  }
+  Map<String,dynamic> toJson()=>{
+    "favid" : id,
+    "favlist" : favourites
+  };
+}

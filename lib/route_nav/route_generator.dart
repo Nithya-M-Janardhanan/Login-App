@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sample_task/models/arguments.dart';
 import '../screens/account_screen.dart';
-import '../screens/fav_screen.dart';
+import '../screens/cart_screen.dart';
 import '../screens/loginscreen.dart';
 import '../screens/notification_data_screen.dart';
 import '../widgets/bottom_nav_screen.dart';
@@ -38,7 +38,7 @@ class NavRouteGenerator {
         ArgumentsRoute route = settings.arguments as ArgumentsRoute;
         return MaterialPageRoute(builder: (_) => NotificationData(data: route.id,));
       case cartScreenRoute:
-        return MaterialPageRoute(builder: (_)=>FavScreen());
+        return MaterialPageRoute(builder: (_)=>CartScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

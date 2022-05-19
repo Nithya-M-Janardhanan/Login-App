@@ -5,13 +5,14 @@ import 'package:sample_task/machine_test/homemodel.dart';
 import 'package:sample_task/provider/db_provider.dart';
 
 import '../generated/l10n.dart';
+import 'favourites_screen.dart';
 
-class FavScreen extends StatefulWidget {
+class CartScreen extends StatefulWidget {
   @override
-  _FavScreenState createState() => _FavScreenState();
+  _CartScreenState createState() => _CartScreenState();
 }
 
-class _FavScreenState extends State<FavScreen> {
+class _CartScreenState extends State<CartScreen> {
   CartModel? cartModel;
   @override
   void initState() {
@@ -22,7 +23,7 @@ class _FavScreenState extends State<FavScreen> {
   Widget build(BuildContext context) {
     final translated = S.of(context);
     return Scaffold(
-      appBar: AppBar(title:  Text(translated.favouritesScreen),backgroundColor: Colors.teal,
+      appBar: AppBar(title:  Text('Cart'),backgroundColor: Colors.teal,
         actions: [
         Padding(padding: EdgeInsets.only(right: 20.0),child: IconButton(onPressed: () {
             showDialog(context: context,
@@ -42,7 +43,11 @@ class _FavScreenState extends State<FavScreen> {
                 }
                 );
 
-        }, icon: Icon(Icons.delete),))
+        }, icon: Icon(Icons.delete),)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Favourites()));
+          },
+              icon: Icon(Icons.favorite))
       ],),
       body:  Consumer<ContactsProvider>(
         builder: (context, snapshot,child) {
