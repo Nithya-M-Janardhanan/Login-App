@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:sample_task/provider/auth_provider.dart';
 import 'package:sample_task/provider/locale_provider.dart';
 import 'package:sample_task/route_nav/route_generator.dart';
+import 'package:sample_task/screens/my_homepage.dart';
 import 'generated/l10n.dart';
 import 'machine_test/home_provider.dart';
 import 'services/notification_service.dart';
@@ -21,46 +22,6 @@ void main() async {
   await Firebase.initializeApp();
   LocalNotificationService.initialize();
 
-  runApp(const MyHomePage());
+  runApp(const MyHomePage(checkDebug: true,));
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375,810),
-      builder:(child){
-        return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (context) => UserProvider()),
-              ChangeNotifierProvider(create: (context) => ContactsProvider()),
-              ChangeNotifierProvider(create: (context) => AuthProvider()),
-              ChangeNotifierProvider(create: (context) => LocaleProvider()),
-              ChangeNotifierProvider(create: (context) => HomeProvider()),
-            ],
-            child:  Consumer<LocaleProvider>(
-                builder: (context, locale,child) {
-                  return MaterialApp(
-                      debugShowCheckedModeBanner: false,
-                      onGenerateRoute: NavRouteGenerator.generateRoute,
-                      initialRoute: initialRoute,
-                      localizationsDelegates: [
-                        S.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate
-                      ],
-                      locale: locale.locale,
-                      supportedLocales: S.delegate.supportedLocales
-                  );
-                }
-            )
-        );
-      }
-    );
-  }
-}

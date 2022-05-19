@@ -50,6 +50,26 @@ android {
         versionName flutterVersionName
     }
 
+    flavorDimensions "app"
+    productFlavors{
+        dev {
+            dimension "app"
+            applicationId "com.ekart.ekart_app_nithya.dev"
+            minSdkVersion 21
+            targetSdkVersion 31
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+        }
+        prod{
+            dimension "app"
+            applicationId "com.ekart.ekart_app_nithya"
+            minSdkVersion 21
+            targetSdkVersion 31
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
