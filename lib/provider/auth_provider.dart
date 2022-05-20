@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
-
 import '../common/sharedpreferences.dart';
 
 class AuthProvider extends ChangeNotifier{

@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../screens/loginscreen.dart';
-import 'package:sample_task/main.dart';
-import '../screens/homescreen.dart';
 import '../common/sharedpreferences.dart';
 import '../common/social_signin.dart';
-
 import '../common/const.dart';
 
 class UserProvider extends ChangeNotifier{
@@ -18,28 +13,10 @@ class UserProvider extends ChangeNotifier{
   String lname = '';
   Map? fbDetails;
   late List<String> gname;
-  ///for local notification
-  // showNotifications(){
-  //   flutterLocalNotificationsPlugin.show(0,
-  //       'Testing',
-  //       'for testing',
-  //       NotificationDetails(
-  //           android: AndroidNotificationDetails(
-  //               channel.id,
-  //               channel.name,
-  //               channelDescription: channel.description,
-  //               color: Colors.blue,
-  //               playSound: true,
-  //               icon: '@mipmap/ic_launcher'
-  //           )
-  //       )
-  //   );
-  // }
-  ///
+
   /// sign in with google
   googleLogin(BuildContext context) async {
     isLoading = true;
-
       try {
         SocialSignIn.signInWithGoogle().then((value) async {
           //await SharedPreferencesHelper.saveLoginMethod(Const.googleUser);
@@ -47,14 +24,10 @@ class UserProvider extends ChangeNotifier{
 
           if (value.isNotEmpty) {
             test=true;
-            debugPrint('google details.................$value');
             email = value[0];
-            //name = value[1].split(' ');
             name = value[1];
             fname = name[0];
             lname = name[1];
-            debugPrint('google fname.................$fname');
-            debugPrint('google lname.................$lname');
             await SharedPreferenceHelper.setUsername(name);
           //  Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(email: email,)));
             Navigator.pushReplacementNamed(context, "/mainscreen");
@@ -78,7 +51,6 @@ class UserProvider extends ChangeNotifier{
               lname = '';
               SharedPreferenceHelper.clearUserData();
               notifyListeners();
-              debugPrint('name after logged out...$name');
           }
         });
       } catch (err) {
@@ -97,8 +69,6 @@ class UserProvider extends ChangeNotifier{
             fbDetails = value;
             name = fbDetails!['name'];
             email = fbDetails!['email'];
-            debugPrint('fb details....${fbDetails!['name']}');
-            debugPrint('fb details....${fbDetails!['email']}');
             await SharedPreferenceHelper.setUsername(name);
             //Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(email: email,)));
             Navigator.pushReplacementNamed(context, "/mainscreen");
@@ -118,7 +88,6 @@ class UserProvider extends ChangeNotifier{
           fbDetails = {};
           SharedPreferenceHelper.clearUserData();
           notifyListeners();
-          debugPrint('logout fbdetails..........$fbDetails');
         });
       } catch (err) {
         debugPrint('error >>>>>>$err');

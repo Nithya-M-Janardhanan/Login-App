@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import '../generated/l10n.dart';
 import '../machine_test/home_provider.dart';
 import '../provider/auth_provider.dart';
+import '../provider/cart_provider.dart';
 import '../provider/db_provider.dart';
+import '../provider/favourites_provider.dart';
 import '../provider/locale_provider.dart';
 import '../provider/user_provider.dart';
 import '../route_nav/nav_const.dart';
@@ -32,6 +34,8 @@ class MyHomePage extends StatelessWidget {
                 ChangeNotifierProvider(create: (context) => AuthProvider()),
                 ChangeNotifierProvider(create: (context) => LocaleProvider()),
                 ChangeNotifierProvider(create: (context) => HomeProvider()),
+                ChangeNotifierProvider(create: (context) => CartProvider()),
+                ChangeNotifierProvider(create: (context) => FavouritesProvider()),
               ],
               child:  Consumer<LocaleProvider>(
                   builder: (context, locale,child) {

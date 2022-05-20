@@ -8,5 +8,5 @@ void main() async {
   await Firebase.initializeApp();
   LocalNotificationService.initialize();
 
-  runApp(const MyHomePage(checkDebug: true,));
+  runApp(const MyHomePage(checkDebug: false,));
 }

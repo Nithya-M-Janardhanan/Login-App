@@ -9,6 +9,8 @@ import '../machine_test/categories.dart';
 import '../machine_test/home_provider.dart';
 import '../machine_test/products.dart';
 import '../machine_test/search_home.dart';
+import '../provider/favourites_provider.dart';
+import '../shimmer/custom_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -18,8 +20,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
-    Future.microtask(() => context.read<HomeProvider>().getData());
-    Future.microtask(() => context.read<ContactsProvider>().loadFavList());
+
+    Future.microtask(() =>context.read<HomeProvider>().getData() );
+    Future.microtask(() => context.read<FavouritesProvider>().loadFavList());
     super.initState();
   }
   @override
@@ -29,11 +32,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Consumer<HomeProvider>(builder: (context, snapshot, child) {
-          if (snapshot.homeModel?.homeData == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+          // if (snapshot.homeModel?.homeData == null) {
+          //   return const Center(
+          //     child: CircularProgressIndicator(),
+          //   );
+          // }
           return Container(
             width: double.maxFinite,
             height: double.maxFinite,

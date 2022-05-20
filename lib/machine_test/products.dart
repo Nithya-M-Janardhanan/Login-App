@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_task/provider/db_provider.dart';
+import 'package:sample_task/provider/favourites_provider.dart';
 import '../common/const.dart';
-import '../common/helpers.dart';
-import '../services/db_helper.dart';
+import '../provider/cart_provider.dart';
+import '../shimmer/custom_widget.dart';
 import 'hexcolor.dart';
 import 'home_provider.dart';
 import 'homemodel.dart';
@@ -16,8 +16,8 @@ class ProductsWidget extends StatelessWidget {
   ValueNotifier<bool> isfav = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
-    return Consumer2<HomeProvider,ContactsProvider>(
-          builder: (context, snapshot,model,child) {
+    return Consumer3<HomeProvider,CartProvider,FavouritesProvider>(
+          builder: (context, snapshot,model,fav,child) {
             final productItem = snapshot.homeModel?.homeData?.firstWhere(
               ((element) {
                 if (element.type != null) {
@@ -28,36 +28,42 @@ class ProductsWidget extends StatelessWidget {
               }),
               orElse: () => HomeDatum(),
             );
-            if(productItem == null || productItem.type ==null){
-              return const SizedBox();
-            }
-            return Container(
+            // if(productItem == null || productItem.type ==null){
+            //   return const SizedBox();
+            // }
+            return
+              Container(
               height: 280,
               width: double.maxFinite,
               child: ListView.builder(
-                itemCount: productItem.values?.length,
+                itemCount: productItem?.values?.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context,index){
-                  final check = model.cartModel?.firstWhere((element) => element.value?.id == productItem.values?[index].id,orElse: ()=>CartModel());
-                  final favCheck = model.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
-                  return Container(
+                  final check = model.cartModel?.firstWhere((element) => element.value?.id == productItem?.values?[index].id,orElse: ()=>CartModel());
+                  final favCheck = fav.favList?.firstWhere((element) => element.favourites?.id == productItem?.values?[index].id,orElse: ()=>FavouritesModel());
+                  return
+                    Container(
                       width: 170.0,
                       margin: const EdgeInsets.only(left: 10),
-                      child: Container(
+                      child:
+                      Container(
                         margin: const EdgeInsets.only(right: 5),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                             border: Border.all(color: HexColor("#FFEAEAEA"))),
-                        child: Column(
+                        child: productItem == null || productItem.type ==null ? const CustomWidget.rectangular(height: 10,) :
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding:  EdgeInsets.only(right: 10.0),
-                              child: Container(
+                              child:
+                              Container(
                                 margin: const EdgeInsets.only(top: 10),
-                                child: Row(
+                                child:
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     productItem.values?[index].offer == 0 ? SizedBox() :
@@ -81,11 +87,11 @@ class ProductsWidget extends StatelessWidget {
                                         builder: (context, snapshot,child) {
                                           return GestureDetector(
                                             onTap: (){
-                                              final check = model.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
+                                              final check = fav.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
                                               if(check?.favourites == null){
-                                                context.read<ContactsProvider>().insertFavItems(productItem.values![index]);
+                                                context.read<FavouritesProvider>().insertFavItems(productItem.values![index]);
                                               }else{
-                                                context.read<ContactsProvider>().deleteFavouritesItem(check?.id);
+                                                context.read<FavouritesProvider>().deleteFavouritesItem(check?.id);
                                               }
                                             },
                                             child:
@@ -141,9 +147,9 @@ class ProductsWidget extends StatelessWidget {
                                         int countMinus = check?.count ?? 0;
                                         countMinus = countMinus - 1;
                                         if(countMinus <= 0){
-                                          context.read<ContactsProvider>().deleteData(check?.id);
+                                          context.read<CartProvider>().deleteData(check?.id);
                                         }else{
-                                          context.read<ContactsProvider>().updateCountfn(check?.id, countMinus);
+                                          context.read<CartProvider>().updateCountfn(check?.id, countMinus);
                                         }
                                       }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.remove,color: HexColor('#199B3B'),))),
                                        // count(model.cartModel),
@@ -154,10 +160,10 @@ class ProductsWidget extends StatelessWidget {
                                          if(check?.count != null){
                                            int? count = check?.count ?? 0;
                                            count = count + 1;
-                                           context.read<ContactsProvider>().updateCountfn(check?.id, count);
+                                           context.read<CartProvider>().updateCountfn(check?.id, count);
                                          }
                                        }else{
-                                         context.read<ContactsProvider>().insertProducts(productItem.values![index]);
+                                         context.read<CartProvider>().insertProducts(productItem.values![index]);
                                        }
                                       }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.add,color: HexColor('#199B3B'),))),
                                     ],
@@ -166,7 +172,7 @@ class ProductsWidget extends StatelessWidget {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(primary: HexColor('#199B3B'),minimumSize: Size(110, 30)),
                                   onPressed: (){
-                                    context.read<ContactsProvider>().insertProducts(productItem.values![index]);
+                                    context.read<CartProvider>().insertProducts(productItem.values![index]);
                                     // context.read<ContactsProvider>().loadProducts();
                                   },
                                   child: Text('ADD'),

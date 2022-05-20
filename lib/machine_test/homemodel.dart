@@ -1,12 +1,5 @@
 import 'dart:convert';
 
-class HomeModelList {
-  List<HomeModel>? homeList;
-  HomeModelList({this.homeList});
-
-  factory HomeModelList.fromJson(List<dynamic> json) =>
-      HomeModelList(homeList: json.map((e) => HomeModel.fromJson(e)).toList());
-}
 class HomeModel {
   HomeModel({
     this.status,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../common/const.dart';
+import '../shimmer/custom_widget.dart';
 import 'hexcolor.dart';
 import 'home_provider.dart';
 import 'homemodel.dart';
@@ -33,9 +34,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         orElse: () => HomeDatum(),
       );
 
-      if (categoryItem == null || categoryItem.type == null) {
-        return const SizedBox();
-      }
+      // if (categoryItem == null || categoryItem.type == null) {
+      //   return const  CustomWidget.circular(height: 64, width: 64);
+      //     // const SizedBox();
+      // }
       return Container(
         margin: const EdgeInsets.only(top: 20.0),
         height: MediaQuery.of(context).size.height * 0.15,
@@ -46,12 +48,15 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           ),
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return Container(
+              return
+                Container(
                 margin: const EdgeInsets.only(
                   right: 20,
                 ),
-                child: Column(
+                child:
+                Column(
                   children: [
+                    categoryItem == null || categoryItem.type == null ? CustomWidget.circular(height: 64, width: 64) :
                     Stack(
                       alignment: Alignment.center,
                       children: [
@@ -63,6 +68,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(40.0))),
                         ),
+
                         FadeInImage.assetNetwork(
                           placeholder: Const.placeholder,
                           image: categoryItem.values?[index].imageUrl ?? '',
@@ -71,9 +77,11 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         )
                       ],
                     ),
+
                     Expanded(
-                        child: Text(
-                          categoryItem.values?[index].name ?? '',
+                        child:
+                        Text(
+                          categoryItem?.values?[index].name ?? '',
                           style: const TextStyle(fontSize: 13, color: Colors.black),
                         ))
                   ],
@@ -81,7 +89,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               );
             },
             scrollDirection: Axis.horizontal,
-            itemCount: categoryItem.values?.length,
+            itemCount: categoryItem?.values?.length,
           ),
         ),
       );

@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:sample_task/machine_test/homemodel.dart';
 import 'package:sample_task/provider/db_provider.dart';
 
+import '../provider/favourites_provider.dart';
+
 class Favourites extends StatefulWidget {
   const Favourites({Key? key}) : super(key: key);
 
@@ -14,7 +16,7 @@ class Favourites extends StatefulWidget {
 class _FavouritesState extends State<Favourites> {
   @override
   void initState() {
-    Future.microtask(() => context.read<ContactsProvider>().loadFavList());
+    Future.microtask(() => context.read<FavouritesProvider>().loadFavList());
     super.initState();
   }
   @override
@@ -24,7 +26,7 @@ class _FavouritesState extends State<Favourites> {
         title: Text('Favourites'),
         backgroundColor: Colors.teal,
       ),
-      body: Consumer<ContactsProvider>(builder: (context,snapshot,child){
+      body: Consumer<FavouritesProvider>(builder: (context,snapshot,child){
         if(snapshot.favList == null){
           return const SizedBox();
         }
@@ -38,7 +40,7 @@ class _FavouritesState extends State<Favourites> {
                   title: Text(snapshot.favList?[index].favourites?.name ?? ''),
                   subtitle: Text(snapshot.favList?[index].favourites?.actualPrice ?? ''),
                   trailing: IconButton(onPressed: (){
-                     context.read<ContactsProvider>().deleteFavouritesItem(snapshot.favList?[index].id);
+                     context.read<FavouritesProvider>().deleteFavouritesItem(snapshot.favList?[index].id);
                   },icon: Icon(Icons.delete),),
                 ),
               );

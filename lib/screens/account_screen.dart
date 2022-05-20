@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +100,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                 // textValue = 'Switch Button is ON';
                               });
-                              print('Switch Button is ON');
                             }
                             else
                             {
@@ -112,7 +110,6 @@ class _AccountScreenState extends State<AccountScreen> {
                                 });
                                 // textValue = 'Switch Button is OFF';
                               });
-                              print('Switch Button is OFF');
                             }
                           },
                           value: isLanguage,
@@ -147,18 +144,14 @@ class _AccountScreenState extends State<AccountScreen> {
                                   snapshot.isSwitched=value;
                                 });
                                 await SharedPreferenceHelper.setSensor(true);
-                                debugPrint('sharedpref value on...${await SharedPreferenceHelper.getSensor()}');
-                                debugPrint('is switched ....${snapshot.isSwitched}');
                                 // getAuth();
                               }
                               if(snapshot.isSwitched==false){
                                 await SharedPreferenceHelper.setSensor(false);
-                                debugPrint('sharedpref value off...${await SharedPreferenceHelper.getSensor()}');
                               }
                             }catch(err){
                               debugPrint('$err');
                             }
-
                           },
                           activeColor: Colors.blue,
                           activeTrackColor: Colors.teal,

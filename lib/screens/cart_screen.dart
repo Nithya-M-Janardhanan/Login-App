@@ -5,6 +5,7 @@ import 'package:sample_task/machine_test/homemodel.dart';
 import 'package:sample_task/provider/db_provider.dart';
 
 import '../generated/l10n.dart';
+import '../provider/cart_provider.dart';
 import 'favourites_screen.dart';
 
 class CartScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _CartScreenState extends State<CartScreen> {
   CartModel? cartModel;
   @override
   void initState() {
-    Future.microtask(() => context.read<ContactsProvider>().loadProducts());
+    Future.microtask(() => context.read<CartProvider>().loadProducts());
     super.initState();
   }
   @override
@@ -35,7 +36,7 @@ class _CartScreenState extends State<CartScreen> {
                         Navigator.pop(context);
                       }, child: Text('No')),
                       TextButton(onPressed: (){
-                        context.read<ContactsProvider>().deleteAllData();
+                        context.read<CartProvider>().deleteAllData();
                         Navigator.pop(context);
                       }, child: Text('Yes'))
                     ],
@@ -49,7 +50,7 @@ class _CartScreenState extends State<CartScreen> {
           },
               icon: Icon(Icons.favorite))
       ],),
-      body:  Consumer<ContactsProvider>(
+      body:  Consumer<CartProvider>(
         builder: (context, snapshot,child) {
           if(snapshot.cartModel == null){
             return const SizedBox();
@@ -65,22 +66,22 @@ class _CartScreenState extends State<CartScreen> {
                   IconButton(onPressed: ()async{
                     int count = snapshot.cartModel?[index].count ?? 0;
                     count = count + 1;
-                        context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, count);
+                        context.read<CartProvider>().updateCountfn(snapshot.cartModel?[index].id, count);
                   }, icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.add))),
                   Text('${snapshot.cartModel?[index].count}'),
                   IconButton(onPressed: (){
                     int countMinus = snapshot.cartModel?[index].count ?? 0;
                     countMinus = countMinus - 1;
                     if(countMinus <= 0){
-                      context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
+                      context.read<CartProvider>().deleteData(snapshot.cartModel?[index].id);
                     }else{
-                      context.read<ContactsProvider>().updateCountfn(snapshot.cartModel?[index].id, countMinus);
+                      context.read<CartProvider>().updateCountfn(snapshot.cartModel?[index].id, countMinus);
                     }
                   },icon: Container(decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.grey[300]),child: Icon(Icons.remove)),)
                 ]),
                 trailing: IconButton(
                   onPressed: (){
-                     context.read<ContactsProvider>().deleteData(snapshot.cartModel?[index].id);
+                     context.read<CartProvider>().deleteData(snapshot.cartModel?[index].id);
                   },
                   icon: Icon(Icons.delete),
                 ),

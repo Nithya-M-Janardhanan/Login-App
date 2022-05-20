@@ -6,6 +6,7 @@ import 'package:sample_task/provider/db_provider.dart';
 import '../common/const.dart';
 import '../generated/l10n.dart';
 import '../machine_test/hexcolor.dart';
+import '../provider/cart_provider.dart';
 import '../screens/account_screen.dart';
 import '../route_nav/nav_const.dart';
 import '../route_nav/route_generator.dart';
@@ -33,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
       BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.black,),label: translated.home,),
       BottomNavigationBarItem(icon: Icon(Icons.category_outlined,color: Colors.black),label: translated.category,),
       // BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined,color: Colors.teal),label: 'Cart',),
-      BottomNavigationBarItem(icon: Consumer<ContactsProvider>(
+      BottomNavigationBarItem(icon: Consumer<CartProvider>(
         builder: (context, snapshot,child) {
           // String num = snapshot.cartModel?.length.toString() ?? '0';
           String num = snapshot.totalCartCount.toString();

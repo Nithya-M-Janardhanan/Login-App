@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart'as http;
@@ -10,8 +9,12 @@ class HomeProvider extends ChangeNotifier{
   HomeModel? homeModel;
 
   Future<void> getData() async{
-    homeModel = await ApiServices().getData();
-    notifyListeners();
+    Future.delayed(Duration(seconds: 5),()async{
+      homeModel = await ApiServices().getData();
+      notifyListeners();
+    });
+
+
   }
 
 }

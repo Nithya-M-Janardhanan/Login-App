@@ -54,7 +54,9 @@ class LoginScreenState extends State<LoginScreen> {
                       contentPadding: EdgeInsets.all(10.0),
                       border: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)))),
+                              BorderRadius.all(Radius.circular(5.0))),
+
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return translated.pleaseEnterName;

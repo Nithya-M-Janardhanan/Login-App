@@ -5,6 +5,7 @@ import 'package:sample_task/common/const.dart';
 import 'package:sample_task/models/arguments.dart';
 import 'package:sample_task/route_nav/nav_const.dart';
 import '../generated/l10n.dart';
+import '../provider/cart_provider.dart';
 import '../services/notification_service.dart';
 import '../shimmer/custom_widget.dart';
 import 'gmap_screen.dart';
@@ -27,7 +28,7 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     LocalNotificationService.initializeNotificationHome(context);
     Future.microtask(() => context.read<ContactsProvider>().loadUsers());
-    Future.microtask(() => context.read<ContactsProvider>().loadProducts());
+    Future.microtask(() => context.read<CartProvider>().loadProducts());
     super.initState();
   }
   Widget buildShimmer() =>
