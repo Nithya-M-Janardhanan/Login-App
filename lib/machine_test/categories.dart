@@ -78,12 +78,11 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                       ],
                     ),
 
-                    Expanded(
-                        child:
-                        Text(
-                          categoryItem?.values?[index].name ?? '',
-                          style: const TextStyle(fontSize: 13, color: Colors.black),
-                        ))
+                    categoryItem == null || categoryItem.type == null ? CustomWidget.rectangular( height: 5.0,width: 30.0,) :
+                    Text(
+                      categoryItem.values?[index].name ?? '',
+                      style: const TextStyle(fontSize: 13, color: Colors.black),
+                    )
                   ],
                 ),
               );

@@ -1,3 +1,4 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ class HomeScreenState extends State<HomeScreen> {
     LocalNotificationService.initializeNotificationHome(context);
     Future.microtask(() => context.read<ContactsProvider>().loadUsers());
     Future.microtask(() => context.read<CartProvider>().loadProducts());
+
     super.initState();
   }
   Widget buildShimmer() =>

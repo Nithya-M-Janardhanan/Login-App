@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../common/sharedpreferences.dart';
 import '../common/social_signin.dart';
 import '../common/const.dart';
@@ -13,6 +14,9 @@ class UserProvider extends ChangeNotifier{
   String lname = '';
   Map? fbDetails;
   late List<String> gname;
+  DateTime chosenDate = DateTime.now();
+  final dateFormat = DateFormat('dd EEEE');
+  final dateFormatForYear = DateFormat('MMMM yyyy');
 
   /// sign in with google
   googleLogin(BuildContext context) async {
@@ -93,4 +97,13 @@ class UserProvider extends ChangeNotifier{
         debugPrint('error >>>>>>$err');
       }
   }
+  void dateFn(DateTime dateTime){
+    chosenDate = dateTime;
+    notifyListeners();
+  }
+  void setTodayDate(){
+    chosenDate = DateTime.now();
+    notifyListeners();
+  }
+
 }

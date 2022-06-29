@@ -1,3 +1,4 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,15 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
-
+    FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData? dynamicLink) async{
+      final Uri? deepLink = dynamicLink?.link;
+      print(deepLink?.path);
+    },
+    onError: (OnLinkErrorException e)async
+        {
+          print(e.message);
+        }
+    );
     Future.microtask(() =>context.read<HomeProvider>().getData() );
     Future.microtask(() => context.read<FavouritesProvider>().loadFavList());
     super.initState();

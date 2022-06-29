@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_task/provider/user_provider.dart';
+import '../common/common_textfield.dart';
+import '../common/custom_text_field.dart';
 import '../common/sharedpreferences.dart';
 
 import '../common/const.dart';
@@ -25,9 +28,43 @@ class LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool circular = false;
 
+  signUp()async{
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+  signIn()async{
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'staging@gmail.com',
+          password: "staging"
+      );
+      print(await userCredential.user?.getIdToken());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
   @override
   void initState() {
+
     super.initState();
+    signIn();
   }
 
   @override
@@ -55,6 +92,7 @@ class LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(5.0))),
+                    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(width: 1.0,color: Colors.red))
 
                   ),
                   validator: (String? value) {
@@ -69,15 +107,11 @@ class LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                child:
+                CustomTextField(
                   controller: emailController,
-                  decoration:  InputDecoration(
-                      hintText: translated.enterEmail,
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)))),
+                  hintText: translated.enterEmail,
+                  labelText: 'Email Address',
                   validator: (String? value) {
                     String pattern =
                         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -88,7 +122,30 @@ class LoginScreenState extends State<LoginScreen> {
                       return null;
                     }
                   },
-                ),
+                )
+                /*TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
+                  decoration:  InputDecoration(
+                      hintText: translated.enterEmail,
+                      labelText: 'Enter Email',
+                      contentPadding: EdgeInsets.all(10.0),
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(5.0))),
+                      focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(width: 1.0,color: Colors.red))
+                  ),
+                  validator: (String? value) {
+                    String pattern =
+                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                    RegExp regex = RegExp(pattern);
+                    if (!regex.hasMatch(value!)) {
+                      return translated.validEmail;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),*/
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
@@ -101,6 +158,7 @@ class LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
+                        focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(width: 1.0,color: Colors.red))
                     ),
                     validator: (String? value) {
                       if (value!.length < 8) {

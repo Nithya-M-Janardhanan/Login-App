@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "664089907797",
+    "project_id": "ekart-prod-e1c62",
+    "storage_bucket": "ekart-prod-e1c62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664089907797:android:9e4ea4fa24e02a69a7fadc",
+        "android_client_info": {
+          "package_name": "com.ekart.ekart_app_nithya.prod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664089907797-odakane6s91s2f3cm5tdpult7j4guq6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ekart.ekart_app_nithya.prod",
+            "certificate_hash": "7941cc533680900f9c19969f7b310e85ccd8a2f2"
+          }
+        },
+        {
+          "client_id": "664089907797-7un9bq2vvqjt2g4m0q9vbqescbl73edg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtR1DWt0SDnAHqB9-86Kx6-WwbF4fPYnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664089907797-7un9bq2vvqjt2g4m0q9vbqescbl73edg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

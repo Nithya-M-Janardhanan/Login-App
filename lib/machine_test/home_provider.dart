@@ -9,7 +9,7 @@ class HomeProvider extends ChangeNotifier{
   HomeModel? homeModel;
 
   Future<void> getData() async{
-    Future.delayed(Duration(seconds: 5),()async{
+    Future.delayed(Duration(seconds: 1),()async{
       homeModel = await ApiServices().getData();
       notifyListeners();
     });

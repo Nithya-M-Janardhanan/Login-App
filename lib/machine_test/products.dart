@@ -1,10 +1,13 @@
 
 
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_task/provider/favourites_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../common/const.dart';
 import '../provider/cart_provider.dart';
 import '../shimmer/custom_widget.dart';
@@ -80,30 +83,30 @@ class ProductsWidget extends StatelessWidget {
                                         ],
                                       )
                                     ],),
-                                    Container(
-                                      //margin: const EdgeInsets.only(top: 10.0),
-                                      child: ValueListenableBuilder<bool>(
-                                        valueListenable: isfav,
-                                        builder: (context, snapshot,child) {
-                                          return GestureDetector(
-                                            onTap: (){
-                                              final check = fav.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
-                                              if(check?.favourites == null){
-                                                context.read<FavouritesProvider>().insertFavItems(productItem.values![index]);
-                                              }else{
-                                                context.read<FavouritesProvider>().deleteFavouritesItem(check?.id);
-                                              }
-                                            },
-                                            child:
-                                            favCheck?.favourites != null ? Icon(Icons.favorite,color: Colors.red,) :
-                                            Image.asset(
-                                              Const.favIcon,
-                                              height: 19.h,
-                                              width: 19.0,
+                                    Column(
+                                      children: [
+                                        GestureDetector(
+                                              onTap: (){
+                                                final check = fav.favList?.firstWhere((element) => element.favourites?.id == productItem.values?[index].id,orElse: ()=>FavouritesModel());
+                                                if(check?.favourites == null){
+                                                  context.read<FavouritesProvider>().insertFavItems(productItem.values![index]);
+                                                }else{
+                                                  context.read<FavouritesProvider>().deleteFavouritesItem(check?.id);
+                                                }
+                                              },
+                                              child:
+                                              favCheck?.favourites != null ? Icon(Icons.favorite,color: Colors.red,) :
+                                              Image.asset(
+                                                Const.favIcon,
+                                                height: 19.h,
+                                                width: 19.0,
+                                              ),
                                             ),
-                                          );
-                                        }
-                                      ),
+                                        IconButton(onPressed: ()async{
+                                            shareProduct(context,productItem.values?[index].name);
+                                        },
+                                            icon: Icon(Icons.share,size: 20,color: Colors.grey[400],))
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -189,5 +192,34 @@ class ProductsWidget extends StatelessWidget {
             );
           }
       );
+  }
+
+  Future<String>createDynamicLink(BuildContext context,String? name)async{
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String packageName = packageInfo.packageName;
+    final DynamicLinkParameters dynamicLinkParameters = DynamicLinkParameters(
+      socialMetaTagParameters: SocialMetaTagParameters(
+          description: 'Check this out $name on ekart'
+      ),
+        uriPrefix: "https://ekartnithya.page.link",
+        link: Uri.parse("https://www.google.com/?name=$name"),
+      androidParameters: AndroidParameters(packageName: 'com.ekart.ekart_app_nithya.dev'));
+    final link = await dynamicLinkParameters.buildUrl();
+    print(link);
+    final ShortDynamicLink shortenedLink =
+    await DynamicLinkParameters.shortenUrl(
+      Uri.parse(link.toString()),
+      DynamicLinkParametersOptions(
+          shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),);
+    return '${shortenedLink.shortUrl}';
+  }
+  Future<void> shareProduct(BuildContext context,String? name)async{
+    try{
+      String shareCode = await createDynamicLink(context,name);
+      String text = 'Check this out  on ekart';
+      Share.share(text).whenComplete(() => Navigator.pop(context)).onError((error, stackTrace) => Navigator.pop(context));
+    }catch(e){
+      Navigator.pop(context);
+    }
   }
 }
